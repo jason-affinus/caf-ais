@@ -1,0 +1,64 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"environment": {
+			"defaultValue": "dev",
+			"type": "String"
+		},
+		"tier": {
+			"defaultValue":"Standard",
+			"type": "String"
+		},
+		"tierName": {
+			"defaultValue":"Standard",
+			"type": "String"
+		},
+		"location": {
+			"defaultValue": "uksouth",
+			"type": "String"
+		},
+		"regionId": {
+			"defaultValue":"uksouth",
+			"type": "string",
+			"metadata": {
+				"description": "Which Azure Region to deploy the resource to. This must be a valid Azure regionId."
+			}
+		}
+	},
+	"variables": {
+		"servicebusName": "[concat('sb-ais-', parameters('environment'),'-', parameters('regionId'))]"
+	},
+	"resources": [
+		{
+			"type": "Microsoft.ServiceBus/namespaces",
+			"apiVersion": "2021-06-01-preview",
+			"name": "[variables('servicebusName')]",
+			"location": "[parameters('location')]",
+			"sku": {
+				"name": "[parameters('tierName')]",
+				"tier": "[parameters('tier')]"
+			},
+			"properties": {
+				"disableLocalAuth": false,
+				"zoneRedundant": false
+			}
+		},
+		{
+			"type": "Microsoft.ServiceBus/namespaces/AuthorizationRules",
+			"apiVersion": "2021-06-01-preview",
+			"name": "[concat(variables('servicebusName'), '/RootManageSharedAccessKey')]",
+			"location": "[parameters('location')]",
+			"dependsOn": [
+				"[resourceId('Microsoft.ServiceBus/namespaces', variables('servicebusName'))]"
+			],
+			"properties": {
+				"rights": [
+					"Listen",
+					"Manage",
+					"Send"
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,93 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "environment": {
+            "defaultValue": "dev",
+            "type": "String"
+        },
+        "vnetAddressSpace": {
+			"type": "string",
+			"defaultValue": "192.168.0.0/16",
+			"metadata": {
+				"description": "CIDR prefix for the VNet address space."
+			}
+		},
+        "frontEndSubnetPrefix": {
+			"type": "string",
+			"defaultValue": "192.168.1.0/24",
+			"metadata": {
+				"description": "CIDR address prefix for the front end subnet."
+			}
+		},
+        "backEndSubnetPrefix": {
+			"type": "string",
+			"defaultValue": "192.168.2.0/24",
+			"metadata": {
+				"description": "CIDR address prefix for the back end subnet."
+			}
+		},
+		"regionId": {
+			"defaultValue": "uksouth",
+			"type": "String"
+		}
+    },
+
+    "variables": {
+        "vnet-template-url": "[uri(deployment().properties.templateLink.uri, 'vnet/template.json')]"
+    },
+
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "vNET",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'vnet/template.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "environment": {
+                        "value": "[parameters('environment')]"
+                    },
+                    "vnetAddressSpace": {
+                        "value": "[parameters('vnetAddressSpace')]"
+                    },
+                    "frontEndSubnetPrefix": {
+                        "value": "[parameters('frontEndSubnetPrefix')]"
+                    },
+                   "backEndSubnetPrefix": {
+                       "value": "[parameters('backEndSubnetPrefix')]"
+                   },
+                   "regionId": {
+                       "value": "[parameters('regionId')]"
+                   }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "serviceBus",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'sbus/template.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "environment": {
+                        "value": "[parameters('environment')]"
+                    },
+                    "regionId": {
+                        "value": "[parameters('regionId')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+    }
+}

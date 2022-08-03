@@ -53,6 +53,7 @@
                     "keyVaultName": {
                         "value": "[concat('kv-ais-', parameters('environment'),'-', parameters('regionId'))]"
                     }
+                    
                 }
             }
         },

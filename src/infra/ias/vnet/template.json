@@ -52,9 +52,9 @@
 		//"vnetName": "[concat('vnet-ais-',parameters('environment'), '-', parameters('regionId'),'-001')]",
 		"backEndNSGName": "[concat('nsg-ais-backend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
 		"frontEndNSGName": "[concat('nsg-ais-frontend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
-		"backEndSubnetName": "[concat('snet-ais-backend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
-		"frontEndSubnetName": "[concat('snet-ais-frontend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
-		"privateLinkSubnetName": "[concat('snet-ais-privatelink-',parameters('environment'), '-', parameters('regionId'),'-001')]"
+		//"backEndSubnetName": "[concat('snet-ais-backend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
+		//"frontEndSubnetName": "[concat('snet-ais-frontend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
+		//"privateLinkSubnetName": "[concat('snet-ais-privatelink-',parameters('environment'), '-', parameters('regionId'),'-001')]"
 	},
 	"resources": [
 		{
@@ -156,7 +156,7 @@
 			"properties": {
 				"addressSpace": {
 					"addressPrefixes": [
-						"[parameters('vnetAddressSpace')]"
+						"[parameters('vnet').address]"
 					]
 				},
 				"subnets": [
@@ -170,18 +170,18 @@
 						}
 					},
 					{
-						"name": "[variables('backEndSubnetName')]",
+						"name": "[parameters('vNet').backEnd.name]",
 						"properties": {
-							"addressPrefix": "[parameters('backEndSubnetPrefix')]",
+							"addressPrefix": "[parameters('vNet').backEnd.address]",
 							"networkSecurityGroup": {
 								"id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('backEndNSGName'))]"
 							}
 						}
 					},
 					{
-						"name": "[variables('privateLinkSubnetName')]",
+						"name": "[parameters('vNet').privateLink.name]",
 						"properties": {
-							"addressPrefix": "[parameters('privateLinkSubnetPrefix')]"
+							"addressPrefix": "[parameters('vNet').privateLink.address]"
 						}
 					}
 				]

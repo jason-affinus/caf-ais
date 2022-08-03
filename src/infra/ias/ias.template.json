@@ -51,13 +51,21 @@
         "nameSuffix": "[concat('-',parameters('systemPrefix'),'-',parameters('environment'),'-',resourceGroup().location,'-01')]",
 
         "kvName": "[concat('kv',variables('nameSuffix'))]",
-        "vNetName": "[concat('vnet',variables('nameSuffix'))]",
-        "backEndSubnetName": "[concat('vnet-',variables('nameSuffix'))]",
+        
         "vNet" : {
             "name":"[concat('vnet-',variables('nameSuffix'))]",
+            "address":"[parameters('vnetAddressSpace')]",
             "frontEnd": {
                 "name":"[concat('snet-',parameters('systemPrefix'),'-frontend-',parameters('environment'),'-',resourceGroup().location,'-01')]",
                 "address":"[parameters('frontEndSubnet')]"
+            },
+            "backEnd": {
+                "name":"[concat('snet-',parameters('systemPrefix'),'-backend-',parameters('environment'),'-',resourceGroup().location,'-01')]",
+                "address":"[parameters('backEndSubnet')]"
+            },
+            "privateLink": {
+                "name":"[concat('snet-',parameters('systemPrefix'),'-privatelink-',parameters('environment'),'-',resourceGroup().location,'-01')]",
+                "address":"[parameters('privateLinkSubnet')]"
             }
         }
 
@@ -68,7 +76,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2021-04-01",
-            "name": "keyVault",
+            "name": "caf-aif-keyvault",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -87,7 +95,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2021-04-01",
-            "name": "vNET",
+            "name": "caf-aif-vnet",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -97,22 +105,8 @@
                 "parameters": {
                     "vNet": {
                         "value":"[variables('vNet')]"
-                    },
-                    "environment": {
-                        "value": "[parameters('environment')]"
-                    },
-                    "vnetName": {
-                        "value": "[variables('vNetName')]" 
-                    },
-                    "vnetAddressSpace": {
-                        "value": "[parameters('vnetAddressSpace')]"
-                    },
-                    "frontEndSubnetPrefix": {
-                        "value": "[parameters('frontEndSubnet')]"
-                    },
-                    "backEndSubnetPrefix": {
-                        "value": "[parameters('backEndSubnet')]"
                     }
+                   
                   
                 }
             }
@@ -120,7 +114,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2021-04-01",
-            "name": "serviceBus",
+            "name": "caf-aif-servicebus",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {

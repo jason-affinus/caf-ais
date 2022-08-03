@@ -10,6 +10,10 @@
                 "tenantId": "[subscription().tenantId]"
             }
         },
+        "regionId" : {
+            "type": "string",
+            "defaultValue":"[resourceGroup().location]"
+        },
         "keyVault": {
             "type": "object",
             "defaultValue": {
@@ -42,7 +46,7 @@
     },
 
     "variables": {
-        "tenantId": "[subscription().tenantId]"
+        "regionId": "[resourceGroup()]"
 
     },
 

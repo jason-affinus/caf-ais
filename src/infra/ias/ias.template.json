@@ -5,9 +5,9 @@
         "platform": {
             "type": "object",
             "defaultValue": {
-                "tenantId": "[tenant().tenantId]",
                 "regionId": "uksouth",
-                "environment": "dev"
+                "environment": "dev",
+                "tenantId": "[subscription().tenantId]"
             }
         },
         "keyVault": {
@@ -38,14 +38,11 @@
             "metadata": {
                 "description": "CIDR address prefix for the back end subnet."
             }
-        },
-        "regionId": {
-            "defaultValue": "uksouth",
-            "type": "String"
-        }
+        }        
     },
 
     "variables": {
+        "tenantId": "[subscription().tenantId]"
 
     },
 

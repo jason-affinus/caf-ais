@@ -4,54 +4,12 @@
 	"parameters": {
 		"vNet":{
 			"type": "object"
-		},
-		"environment": {
-			"defaultValue": "dev",
-			"type": "String"
-		},
-		"vnetName": {
-			"type": "string",
-			"metadata": {
-				"description": "vNet Name"
-			}
-		},
-		"vnetAddressSpace": {
-			"type": "string",
-			"defaultValue": "192.168.0.0/16",
-			"metadata": {
-				"description": "CIDR prefix for the VNet address space."
-			}
-		},
-		"frontEndSubnetPrefix": {
-			"type": "string",
-			"defaultValue": "192.168.1.0/24",
-			"metadata": {
-				"description": "CIDR address prefix for the front end subnet."
-			}
-		},
-		"backEndSubnetPrefix": {
-			"type": "string",
-			"defaultValue": "192.168.2.0/24",
-			"metadata": {
-				"description": "CIDR address prefix for the back end subnet."
-			}
-		},
-		"privateLinkSubnetPrefix": {
-			"type": "string",
-			"defaultValue": "192.168.10.0/24",
-			"metadata": {
-				"description": "CIDR address prefix for the private link subnet."
-			}
-		},
-		"regionId": {
-			"defaultValue": "uksouth",
-			"type": "String"
 		}
 	},
 	"variables": {
 		//"vnetName": "[concat('vnet-ais-',parameters('environment'), '-', parameters('regionId'),'-001')]",
-		"backEndNSGName": "[concat('nsg-ais-backend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
-		"frontEndNSGName": "[concat('nsg-ais-frontend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
+		//"backEndNSGName": "[concat('nsg-ais-backend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
+		//"frontEndNSGName": "[concat('nsg-ais-frontend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
 		//"backEndSubnetName": "[concat('snet-ais-backend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
 		//"frontEndSubnetName": "[concat('snet-ais-frontend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
 		//"privateLinkSubnetName": "[concat('snet-ais-privatelink-',parameters('environment'), '-', parameters('regionId'),'-001')]"
@@ -60,7 +18,7 @@
 		{
 			"apiVersion": "2015-06-15",
 			"type": "Microsoft.Network/networkSecurityGroups",
-			"name": "[variables('backEndNSGName')]",
+			"name": "[parameters('vNet').frontEnd.nsg]",
 			"location": "[resourceGroup().location]",
 			"tags": {
 				"displayName": "NSG - Remote Access"
@@ -74,7 +32,7 @@
 							"protocol": "Tcp",
 							"sourcePortRange": "*",
 							"destinationPortRange": "1433",
-							"sourceAddressPrefix": "[parameters('frontEndSubnetPrefix')]",
+							"sourceAddressPrefix": "[parameters('vNet').frontEnd.address]",
 							"destinationAddressPrefix": "*",
 							"access": "Allow",
 							"priority": 100,
@@ -101,7 +59,7 @@
 		{
 			"apiVersion": "2015-06-15",
 			"type": "Microsoft.Network/networkSecurityGroups",
-			"name": "[variables('frontEndNSGName')]",
+			"name": "[parameters('vNet').backEnd.nsg]",
 			"location": "[resourceGroup().location]",
 			"tags": {
 				"displayName": "NSG - Front End"
@@ -145,8 +103,8 @@
 			"name": "[parameters('vNet').name]",
 			"location": "[resourceGroup().location]",
 			"dependsOn": [
-				"[concat('Microsoft.Network/networkSecurityGroups/', variables('frontEndNSGName'))]",
-				"[concat('Microsoft.Network/networkSecurityGroups/', variables('backEndNSGName'))]"
+				"[concat('Microsoft.Network/networkSecurityGroups/', parameters('vNet').frontEnd.nsg)]",
+				"[concat('Microsoft.Network/networkSecurityGroups/', parameters('vNet').backEnd.nsg)]"
 				
 				
 			],
@@ -165,7 +123,7 @@
 						"properties": {
 							"addressPrefix": "[parameters('vNet').frontEnd.address]",
 							"networkSecurityGroup": {
-								"id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('frontEndNSGName'))]"
+								"id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('vNet').frontEnd.nsg)]"
 							}
 						}
 					},
@@ -174,7 +132,7 @@
 						"properties": {
 							"addressPrefix": "[parameters('vNet').backEnd.address]",
 							"networkSecurityGroup": {
-								"id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('backEndNSGName'))]"
+								"id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('vNet').frontEnd.nsg)]"
 							}
 						}
 					},

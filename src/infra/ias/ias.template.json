@@ -57,10 +57,12 @@
             "address":"[parameters('vnetAddressSpace')]",
             "frontEnd": {
                 "name":"[concat('snet-',parameters('systemPrefix'),'-frontend-',parameters('environment'),'-',resourceGroup().location,'-01')]",
+                "nsg":"[concat('nsg-',parameters('systemPrefix'),'-frontend-',parameters('environment'),'-',resourceGroup().location,'-01')]",
                 "address":"[parameters('frontEndSubnet')]"
             },
             "backEnd": {
                 "name":"[concat('snet-',parameters('systemPrefix'),'-backend-',parameters('environment'),'-',resourceGroup().location,'-01')]",
+                "nsg":"[concat('nsg-',parameters('systemPrefix'),'-backend-',parameters('environment'),'-',resourceGroup().location,'-01')]",
                 "address":"[parameters('backEndSubnet')]"
             },
             "privateLink": {

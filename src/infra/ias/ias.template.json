@@ -40,7 +40,10 @@
     },
 
     "variables": {
-        "kvName":"[concat('kv-',parameters('systemPrefix'),'-',parameters('environment'),'-',resourceGroup().location,'-01')]"
+        "nameSuffix": "[concat('-',parameters('systemPrefix'),'-',parameters('environment'),'-',resourceGroup().location,'-01')]",
+
+        "kvName":"[concat('kv-',variables('nameSuffix'))]"
+
     },
 
     "resources": [

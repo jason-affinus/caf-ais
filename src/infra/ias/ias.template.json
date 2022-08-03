@@ -53,7 +53,7 @@
         "kvName": "[concat('kv',variables('nameSuffix'))]",
         
         "vNet" : {
-            "name":"[concat('vnet-',variables('nameSuffix'))]",
+            "name":"[concat('vnet',variables('nameSuffix'))]",
             "address":"[parameters('vnetAddressSpace')]",
             "frontEnd": {
                 "name":"[concat('snet-',parameters('systemPrefix'),'-frontend-',parameters('environment'),'-',resourceGroup().location,'-01')]",

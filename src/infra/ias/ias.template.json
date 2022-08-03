@@ -50,8 +50,8 @@
     "variables": {
         "nameSuffix": "[concat('-',parameters('systemPrefix'),'-',parameters('environment'),'-',resourceGroup().location,'-01')]",
 
-        "kvName": "[concat('kv-',variables('nameSuffix'))]",
-        "vNetName": "[concat('vnet-',variables('nameSuffix'))]",
+        "kvName": "[concat('kv',variables('nameSuffix'))]",
+        "vNetName": "[concat('vnet',variables('nameSuffix'))]",
         "backEndSubnetName": "[concat('vnet-',variables('nameSuffix'))]",
         "vNet" : {
             "name":"[concat('vnet-',variables('nameSuffix'))]",

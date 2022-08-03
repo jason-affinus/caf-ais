@@ -4,14 +4,15 @@
     "parameters": {
         "systemPrefix": {
             "type": "string",
-            "defaultValue":"aif",
+            "defaultValue": "aif",
             "metadata": {
                 "description": "System prefix used in naming resources"
             }
         },
         "environment": {
             "type": "string",
-            "allowedValues": ["dev","uat","prod"],
+            "defaultValue": "dev",
+            "allowedValues": [ "dev", "uat", "prod" ],
             "metadata": {
                 "description": "Type of environment"
             }
@@ -23,26 +24,42 @@
                 "description": "CIDR prefix for the VNet address space."
             }
         },
-        "frontEndSubnetPrefix": {
+        "frontEndSubnet": {
             "type": "string",
             "defaultValue": "192.168.1.0/24",
             "metadata": {
                 "description": "CIDR address prefix for the front end subnet."
             }
         },
-        "backEndSubnetPrefix": {
+        "backEndSubnet": {
             "type": "string",
             "defaultValue": "192.168.2.0/24",
             "metadata": {
                 "description": "CIDR address prefix for the back end subnet."
             }
-        }        
+        },
+        "privateLinkSubnet": {
+            "type": "string",
+            "defaultValue": "192.168.10.0/24",
+            "metadata": {
+                "description": "CIDR address prefix for the private link."
+            }
+        }
     },
 
     "variables": {
         "nameSuffix": "[concat('-',parameters('systemPrefix'),'-',parameters('environment'),'-',resourceGroup().location,'-01')]",
 
-        "kvName":"[concat('kv-',variables('nameSuffix'))]"
+        "kvName": "[concat('kv-',variables('nameSuffix'))]",
+        "vNetName": "[concat('vnet-',variables('nameSuffix'))]",
+        "backEndSubnetName": "[concat('vnet-',variables('nameSuffix'))]",
+        "vNet" : {
+            "name":"[concat('vnet-',variables('nameSuffix'))]",
+            "frontEnd": {
+                "name":"[concat('snet-',parameters('systemPrefix'),'-frontend-',parameters('environment'),'-',resourceGroup().location,'-01')]",
+                "address":"[parameters('frontEndSubnet')]"
+            }
+        }
 
     },
 
@@ -78,21 +95,25 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "vNet": {
+                        "value":"[variables('vNet')]"
+                    },
                     "environment": {
                         "value": "[parameters('environment')]"
+                    },
+                    "vnetName": {
+                        "value": "[variables('vNetName')]" 
                     },
                     "vnetAddressSpace": {
                         "value": "[parameters('vnetAddressSpace')]"
                     },
                     "frontEndSubnetPrefix": {
-                        "value": "[parameters('frontEndSubnetPrefix')]"
+                        "value": "[parameters('frontEndSubnet')]"
                     },
                     "backEndSubnetPrefix": {
-                        "value": "[parameters('backEndSubnetPrefix')]"
-                    },
-                    "regionId": {
-                        "value": "[resourceGroup().location]"
+                        "value": "[parameters('backEndSubnet')]"
                     }
+                  
                 }
             }
         },

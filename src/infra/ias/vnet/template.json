@@ -2,9 +2,18 @@
 	"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 	"contentVersion": "1.0.0.0",
 	"parameters": {
+		"vNet":{
+			"type": "object"
+		},
 		"environment": {
 			"defaultValue": "dev",
 			"type": "String"
+		},
+		"vnetName": {
+			"type": "string",
+			"metadata": {
+				"description": "vNet Name"
+			}
 		},
 		"vnetAddressSpace": {
 			"type": "string",
@@ -40,7 +49,7 @@
 		}
 	},
 	"variables": {
-		"vnetName": "[concat('vnet-ais-',parameters('environment'), '-', parameters('regionId'),'-001')]",
+		//"vnetName": "[concat('vnet-ais-',parameters('environment'), '-', parameters('regionId'),'-001')]",
 		"backEndNSGName": "[concat('nsg-ais-backend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
 		"frontEndNSGName": "[concat('nsg-ais-frontend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
 		"backEndSubnetName": "[concat('snet-ais-backend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
@@ -133,7 +142,7 @@
 		{
 			"apiVersion": "2015-06-15",
 			"type": "Microsoft.Network/virtualNetworks",
-			"name": "[variables('vnetName')]",
+			"name": "[parameters('vNet').name]",
 			"location": "[resourceGroup().location]",
 			"dependsOn": [
 				"[concat('Microsoft.Network/networkSecurityGroups/', variables('frontEndNSGName'))]",
@@ -152,9 +161,9 @@
 				},
 				"subnets": [
 					{
-						"name": "[variables('frontEndSubnetName')]",
+						"name": "[parameters('vNet').frontEnd.name]",
 						"properties": {
-							"addressPrefix": "[parameters('frontEndSubnetPrefix')]",
+							"addressPrefix": "[parameters('vNet').frontEnd.address]",
 							"networkSecurityGroup": {
 								"id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('frontEndNSGName'))]"
 							}

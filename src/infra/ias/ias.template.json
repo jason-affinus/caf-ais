@@ -7,17 +7,20 @@
             "type": "String"
         },
         "platform": {
+            "type": "object",
             "defaultValue": {
-                "tenantId":"[tenant().tenantId]",
-                "regionId":"uksouth",
+                "tenantId": "[tenant().tenantId]",
+                "regionId": "uksouth",
                 "environment": "dev"
             }
         },
-        "keyVault":{
+        "keyVault": {
+            "type": "object",
             "defaultValue": {
-                "name":"[concat('kv-ais-', parameters('platform').environment,'-', parameters('platform').regionId)]",
+                "name": "[concat('kv-ais-', parameters('platform').environment,'-', parameters('platform').regionId)]",
                 "environment": "dev"
 
+            }
         },
         "vnetAddressSpace": {
             "type": "string",
@@ -66,7 +69,7 @@
                     "keyVaultName": {
                         "value": "[concat('kv-ais-', parameters('environment'),'-', parameters('regionId'))]"
                     }
-                    
+
                 }
             }
         },

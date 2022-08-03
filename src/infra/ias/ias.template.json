@@ -6,6 +6,19 @@
             "defaultValue": "dev",
             "type": "String"
         },
+        "platform": {
+            "defaultValue": {
+                "tenantId":"[tenant().tenantId]",
+                "regionId":"uksouth",
+                "environment": "dev"
+            }
+        },
+        "keyVault":{
+            "defaultValue": {
+                "name":"[concat('kv-ais-', parameters('platform').environment,'-', parameters('platform').regionId)]",
+                "environment": "dev"
+
+        },
         "vnetAddressSpace": {
             "type": "string",
             "defaultValue": "192.168.0.0/16",

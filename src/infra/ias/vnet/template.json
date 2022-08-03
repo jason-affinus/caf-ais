@@ -27,6 +27,13 @@
 				"description": "CIDR address prefix for the back end subnet."
 			}
 		},
+		"privateLinkSubnetPrefix": {
+			"type": "string",
+			"defaultValue": "192.168.10.0/24",
+			"metadata": {
+				"description": "CIDR address prefix for the private link subnet."
+			}
+		},
 		"regionId": {
 			"defaultValue": "uksouth",
 			"type": "String"
@@ -37,7 +44,8 @@
 		"backEndNSGName": "[concat('nsg-ais-backend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
 		"frontEndNSGName": "[concat('nsg-ais-frontend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
 		"backEndSubnetName": "[concat('snet-ais-backend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
-		"frontEndSubnetName": "[concat('snet-ais-frontend-',parameters('environment'), '-', parameters('regionId'),'-001')]"
+		"frontEndSubnetName": "[concat('snet-ais-frontend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
+		"privateLinkSubnetName": "[concat('snet-ais-privatelink-',parameters('environment'), '-', parameters('regionId'),'-001')]"
 	},
 	"resources": [
 		{
@@ -130,6 +138,8 @@
 			"dependsOn": [
 				"[concat('Microsoft.Network/networkSecurityGroups/', variables('frontEndNSGName'))]",
 				"[concat('Microsoft.Network/networkSecurityGroups/', variables('backEndNSGName'))]"
+				
+				
 			],
 			"tags": {
 				"displayName": "VNet"
@@ -157,6 +167,12 @@
 							"networkSecurityGroup": {
 								"id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('backEndNSGName'))]"
 							}
+						}
+					},
+					{
+						"name": "[variables('privateLinkSubnetName')]",
+						"properties": {
+							"addressPrefix": "[parameters('privateLinkSubnetPrefix')]"
 						}
 					}
 				]

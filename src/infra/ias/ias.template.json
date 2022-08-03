@@ -2,10 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "environment": {
-            "defaultValue": "dev",
-            "type": "String"
-        },
         "platform": {
             "type": "object",
             "defaultValue": {
@@ -67,7 +63,7 @@
                 },
                 "parameters": {
                     "keyVaultName": {
-                        "value": "[concat('kv-ais-', parameters('environment'),'-', parameters('regionId'))]"
+                        "value": "[concat('kv-ais-', parameters('platform').environment,'-', parameters('platform').regionId)]"
                     }
 
                 }
@@ -86,7 +82,7 @@
                 },
                 "parameters": {
                     "environment": {
-                        "value": "[parameters('environment')]"
+                        "value": "[parameters('platform').environment]"
                     },
                     "vnetAddressSpace": {
                         "value": "[parameters('vnetAddressSpace')]"
@@ -98,7 +94,7 @@
                         "value": "[parameters('backEndSubnetPrefix')]"
                     },
                     "regionId": {
-                        "value": "[parameters('regionId')]"
+                        "value": "[parameters('platform').regionId]"
                     }
                 }
             }
@@ -115,10 +111,10 @@
                 },
                 "parameters": {
                     "environment": {
-                        "value": "[parameters('environment')]"
+                        "value": "[parameters('platform').environment]"
                     },
                     "regionId": {
-                        "value": "[parameters('regionId')]"
+                        "value": "[parameters('platform').regionId]"
                     }
                 }
             }

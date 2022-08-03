@@ -2,8 +2,7 @@
 	"$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
 	"contentVersion": "1.0.0.0",
 	"parameters": {
-		"environment": {
-			"defaultValue": "dev",
+		"servicebusName": {
 			"type": "String"
 		},
 		"tier": {
@@ -13,28 +12,16 @@
 		"tierName": {
 			"defaultValue":"Standard",
 			"type": "String"
-		},
-		"location": {
-			"defaultValue": "uksouth",
-			"type": "String"
-		},
-		"regionId": {
-			"defaultValue":"uksouth",
-			"type": "string",
-			"metadata": {
-				"description": "Which Azure Region to deploy the resource to. This must be a valid Azure regionId."
-			}
 		}
+		
 	},
-	"variables": {
-		"servicebusName": "[concat('sb-ais-', parameters('environment'),'-', parameters('regionId'))]"
-	},
+	
 	"resources": [
 		{
 			"type": "Microsoft.ServiceBus/namespaces",
 			"apiVersion": "2021-06-01-preview",
-			"name": "[variables('servicebusName')]",
-			"location": "[parameters('location')]",
+			"name": "[parameters('servicebusName')]",
+			"location": "[resourceGroup().location]",
 			"sku": {
 				"name": "[parameters('tierName')]",
 				"tier": "[parameters('tier')]"
@@ -47,10 +34,10 @@
 		{
 			"type": "Microsoft.ServiceBus/namespaces/AuthorizationRules",
 			"apiVersion": "2021-06-01-preview",
-			"name": "[concat(variables('servicebusName'), '/RootManageSharedAccessKey')]",
-			"location": "[parameters('location')]",
+			"name": "[concat(parameters('servicebusName'), '/RootManageSharedAccessKey')]",
+			"location": "[resourceGroup().location]",
 			"dependsOn": [
-				"[resourceId('Microsoft.ServiceBus/namespaces', variables('servicebusName'))]"
+				"[resourceId('Microsoft.ServiceBus/namespaces', parameters('servicebusName'))]"
 			],
 			"properties": {
 				"rights": [

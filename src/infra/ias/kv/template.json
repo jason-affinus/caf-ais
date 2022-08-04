@@ -71,11 +71,13 @@
                         "properties": {
                             "privateLinkServiceId": "[resourceId('Microsoft.KeyVault/vaults',parameters('keyVaultName'))]",
                             "groupIds": "[variables('targetSubResource')]"
-                        }   
+                        }
                     }
                 ]
-            }
-            
+            },
+
+            "tags": {},
+            "dependsOn": []
         }
     ]
-}, "tags": {}, "dependsOn": [] } ] }
+}

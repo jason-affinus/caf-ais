@@ -78,8 +78,7 @@
             },
             "tags": {},
             "dependsOn": [
-                "[resourceId('Microsoft.KeyVault/vaults',variables('keyVaultName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks',parameters('vNet').name)]"
+                "[resourceId('Microsoft.KeyVault/vaults',variables('keyVaultName'))]"
 
             ]
         }

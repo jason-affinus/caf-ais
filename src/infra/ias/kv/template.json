@@ -65,7 +65,7 @@
                         "name": "[parameters('privateEndpointName')]",
                         "properties": {
                             "privateLinkServiceId": "[resourceId('Microsoft.KeyVault/vaults',parameters('keyVaultName'))]",
-                            "groupIds": "vault"
+                            "groupIds": "{[vault]}"
                         }
                     }
                 ]

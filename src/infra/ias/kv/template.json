@@ -7,7 +7,7 @@
             "metadata": {
                 "description": "Name of KV"
             }
-        },       
+        },
         "keyVaultSku": {
             "type": "object",
             "defaultValue": {
@@ -24,6 +24,15 @@
             "metadata": {
                 "description": "Specifies the Azure location where the resources should be created."
             }
+        },
+        "privateEndpointName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of PEP"
+            }
+        },
+        "vNet": {
+            "type": "object"
         }
     },
     "variables": {
@@ -40,6 +49,29 @@
                 "tenantId": "[tenant().tenantId]",
                 "sku": "[parameters('keyVaultSku')]"
             }
+        },
+        {
+            "location": "[parameters('location')]",
+            "name": "[parameters('privateEndpointName')]",
+            "type": "Microsoft.Network/privateEndpoints",
+            "apiVersion": "2021-05-01",
+            "properties": {
+                "subnet": {
+                    "id": "[parameters('vnet').privateLink.name]"
+                },
+                "customNetworkInterfaceName": "pep-ais-kv-uksouth-nic",
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "[parameters('privateEndpointName')]",
+                        "properties": {
+                            "privateLinkServiceId": "[resourceId('Microsoft.KeyVault/vaults',parameters('keyVaultName'))]",
+                            "groupIds": "vault"
+                        }
+                    }
+                ]
+            },
+            "tags": {},
+            "dependsOn": []
         }
     ]
-}
+} 

@@ -89,6 +89,12 @@
                 "parameters": {
                     "keyVaultName": {
                         "value": "[variables('kvName')]"
+                    },
+                    "privateEndpointName": {
+                        "value": "mypepname" // TODO: Fill in parameter value
+                    },
+                    "vNet": {
+                        "value": "[variables('vNet')]"
                     }
 
                 }

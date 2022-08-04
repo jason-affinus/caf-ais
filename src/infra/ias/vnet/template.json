@@ -7,12 +7,6 @@
 		}
 	},
 	"variables": {
-		//"vnetName": "[concat('vnet-ais-',parameters('environment'), '-', parameters('regionId'),'-001')]",
-		//"backEndNSGName": "[concat('nsg-ais-backend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
-		//"frontEndNSGName": "[concat('nsg-ais-frontend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
-		//"backEndSubnetName": "[concat('snet-ais-backend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
-		//"frontEndSubnetName": "[concat('snet-ais-frontend-',parameters('environment'), '-', parameters('regionId'),'-001')]",
-		//"privateLinkSubnetName": "[concat('snet-ais-privatelink-',parameters('environment'), '-', parameters('regionId'),'-001')]"
 	},
 	"resources": [
 		{
@@ -132,7 +126,7 @@
 						"properties": {
 							"addressPrefix": "[parameters('vNet').backEnd.address]",
 							"networkSecurityGroup": {
-								"id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('vNet').frontEnd.nsg)]"
+								"id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('vNet').backEnd.nsg)]"
 							}
 						}
 					},

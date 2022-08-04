@@ -1,7 +1,7 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {        
+    "parameters": {
         "keyVaultSku": {
             "type": "object",
             "defaultValue": {
@@ -20,7 +20,7 @@
         }
 
     },
-    "variables":{
+    "variables": {
         "keyVaultName": "[concat('kv-',parameters('platform').systemPrefix,'-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
         "pepName": "[concat('pep-',parameters('platform').systemPrefix,'-kv-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
         "pepNicName": "[concat('nic-',parameters('platform').systemPrefix,'-kv-',parameters('platform').environment,'-',parameters('platform').region,'-01')]"
@@ -35,7 +35,25 @@
             "properties": {
                 "enableRbacAuthorization": true,
                 "tenantId": "[tenant().tenantId]",
-                "sku": "[parameters('keyVaultSku')]"
+                "sku": "[parameters('keyVaultSku')]",
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "defaultAction": "Deny",
+                    "ipRules": [],
+                    "virtualNetworkRules": [
+/*
+                        {
+                            "id": "[concat(parameters('virtualnetworks_vnet_ais_dev_uksouth_01_externalid'), '/subnets/snet-ais-frontend-dev-uksouth-01')]",
+                            "ignoreMissingVnetServiceEndpoint": false
+                        },
+                        {
+                            "id": "[concat(parameters('virtualnetworks_vnet_ais_dev_uksouth_01_externalid'), '/subnets/snet-ais-backend-dev-uksouth-01')]",
+                            "ignoreMissingVnetServiceEndpoint": false
+                        }
+*/
+                    ]
+                }
+
             }
         },
         {

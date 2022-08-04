@@ -48,7 +48,13 @@
     },
 
     "variables": {
-        "nameSuffix": "[concat('-',parameters('systemPrefix'),'-',parameters('environment'),'-',resourceGroup().location,'-01')]",
+        "platform": {
+            "systemPrefix":"[parameters('systemPrefix')]",
+            "environment":"[parameters('environment')]",
+            "region":"[resourceGroup().location]"
+        },
+
+        "nameSuffix": "[concat('-',parameters('systemPrefix'),'-',parameters('environment'),'-',variables('platform').region,'-01')]",
 
         "kvName": "[concat('kv',variables('nameSuffix'))]",
         "serviceBusName": "[concat('sbus',variables('nameSuffix'))]",
@@ -57,17 +63,17 @@
             "name":"[concat('vnet',variables('nameSuffix'))]",
             "address":"[parameters('vnetAddressSpace')]",
             "frontEnd": {
-                "name":"[concat('snet-',parameters('systemPrefix'),'-frontend-',parameters('environment'),'-',resourceGroup().location,'-01')]",
-                "nsg":"[concat('nsg-',parameters('systemPrefix'),'-frontend-',parameters('environment'),'-',resourceGroup().location,'-01')]",
+                "name":"[concat('snet-',parameters('systemPrefix'),'-frontend-',parameters('environment'),'-',variables('platform').region,'-01')]",
+                "nsg":"[concat('nsg-',parameters('systemPrefix'),'-frontend-',parameters('environment'),'-',variables('platform').region,'-01')]",
                 "address":"[parameters('frontEndSubnet')]"
             },
             "backEnd": {
-                "name":"[concat('snet-',parameters('systemPrefix'),'-backend-',parameters('environment'),'-',resourceGroup().location,'-01')]",
-                "nsg":"[concat('nsg-',parameters('systemPrefix'),'-backend-',parameters('environment'),'-',resourceGroup().location,'-01')]",
+                "name":"[concat('snet-',parameters('systemPrefix'),'-backend-',parameters('environment'),'-',variables('platform').region,'-01')]",
+                "nsg":"[concat('nsg-',parameters('systemPrefix'),'-backend-',parameters('environment'),'-',variables('platform').region,'-01')]",
                 "address":"[parameters('backEndSubnet')]"
             },
             "privateLink": {
-                "name":"[concat('snet-',parameters('systemPrefix'),'-privatelink-',parameters('environment'),'-',resourceGroup().location,'-01')]",
+                "name":"[concat('snet-',parameters('systemPrefix'),'-privatelink-',parameters('environment'),'-',variables('platform').region,'-01')]",
                 "address":"[parameters('privateLinkSubnet')]"
             }
         }
@@ -90,11 +96,17 @@
                     "keyVaultName": {
                         "value": "[variables('kvName')]"
                     },
+                    "platform":  {
+                        "value":"[variables('platform')]"
+                    },
                     "privateEndpointName": {
                         "value": "mypepname" // TODO: Fill in parameter value
                     },
                     "vNet": {
                         "value": "[variables('vNet')]"
+                    },
+                    "privateEndpointNicName": {
+                        "value": "" // TODO: Fill in parameter value
                     }
 
                 }

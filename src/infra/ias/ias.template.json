@@ -49,32 +49,32 @@
 
     "variables": {
         "platform": {
-            "systemPrefix":"[parameters('systemPrefix')]",
-            "environment":"[parameters('environment')]",
-            "region":"[resourceGroup().location]"
+            "systemPrefix": "[parameters('systemPrefix')]",
+            "environment": "[parameters('environment')]",
+            "region": "[resourceGroup().location]"
         },
 
         "nameSuffix": "[concat('-',parameters('systemPrefix'),'-',parameters('environment'),'-',variables('platform').region,'-01')]",
 
-        
+
         "serviceBusName": "[concat('sbus',variables('nameSuffix'))]",
-        
-        "vNet" : {
-            "name":"[concat('vnet',variables('nameSuffix'))]",
-            "address":"[parameters('vnetAddressSpace')]",
+
+        "vNet": {
+            "name": "[concat('vnet',variables('nameSuffix'))]",
+            "address": "[parameters('vnetAddressSpace')]",
             "frontEnd": {
-                "name":"[concat('snet-',parameters('systemPrefix'),'-frontend-',parameters('environment'),'-',variables('platform').region,'-01')]",
-                "nsg":"[concat('nsg-',parameters('systemPrefix'),'-frontend-',parameters('environment'),'-',variables('platform').region,'-01')]",
-                "address":"[parameters('frontEndSubnet')]"
+                "name": "[concat('snet-',parameters('systemPrefix'),'-frontend-',parameters('environment'),'-',variables('platform').region,'-01')]",
+                "nsg": "[concat('nsg-',parameters('systemPrefix'),'-frontend-',parameters('environment'),'-',variables('platform').region,'-01')]",
+                "address": "[parameters('frontEndSubnet')]"
             },
             "backEnd": {
-                "name":"[concat('snet-',parameters('systemPrefix'),'-backend-',parameters('environment'),'-',variables('platform').region,'-01')]",
-                "nsg":"[concat('nsg-',parameters('systemPrefix'),'-backend-',parameters('environment'),'-',variables('platform').region,'-01')]",
-                "address":"[parameters('backEndSubnet')]"
+                "name": "[concat('snet-',parameters('systemPrefix'),'-backend-',parameters('environment'),'-',variables('platform').region,'-01')]",
+                "nsg": "[concat('nsg-',parameters('systemPrefix'),'-backend-',parameters('environment'),'-',variables('platform').region,'-01')]",
+                "address": "[parameters('backEndSubnet')]"
             },
             "privateLink": {
-                "name":"[concat('snet-',parameters('systemPrefix'),'-privatelink-',parameters('environment'),'-',variables('platform').region,'-01')]",
-                "address":"[parameters('privateLinkSubnet')]"
+                "name": "[concat('snet-',parameters('systemPrefix'),'-privatelink-',parameters('environment'),'-',variables('platform').region,'-01')]",
+                "address": "[parameters('privateLinkSubnet')]"
             }
         }
 
@@ -93,8 +93,8 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "platform":  {
-                        "value":"[variables('platform')]"
+                    "platform": {
+                        "value": "[variables('platform')]"
                     },
                     "vNet": {
                         "value": "[variables('vNet')]"
@@ -124,10 +124,10 @@
                 },
                 "parameters": {
                     "vNet": {
-                        "value":"[variables('vNet')]"
+                        "value": "[variables('vNet')]"
                     }
-                   
-                  
+
+
                 }
             }
         },
@@ -143,9 +143,32 @@
                 },
                 "parameters": {
                     "servicebusName": {
-                        "value": "[variables('serviceBusName')]" 
+                        "value": "[variables('serviceBusName')]"
                     }
 
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-vnet')]"
+            ]
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "caf-ais-logicapp",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'la/template.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "platform": {
+                        "value": "[variables('platform')]"
+                    },
+                    "vNet": {
+                        "value": "[variables('vNet')]"
+                    }
                 }
             },
             "dependsOn": [

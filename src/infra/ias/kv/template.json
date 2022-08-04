@@ -12,18 +12,6 @@
                 "description": "Specifies the SKU to use for the key vault."
             }
         },
-        "privateEndpointName": {
-            "type": "string",
-            "metadata": {
-                "description": "Name of PEP"
-            }
-        },
-        "privateEndpointNicName": {
-            "type": "string",
-            "metadata": {
-                "description": "Name of PEP Nic"
-            }
-        },
         "vNet": {
             "type": "object"
         },

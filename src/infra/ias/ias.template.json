@@ -56,7 +56,7 @@
 
         "nameSuffix": "[concat('-',parameters('systemPrefix'),'-',parameters('environment'),'-',variables('platform').region,'-01')]",
 
-        "kvName": "[concat('kv',variables('nameSuffix'))]",
+        
         "serviceBusName": "[concat('sbus',variables('nameSuffix'))]",
         
         "vNet" : {
@@ -93,22 +93,12 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "keyVaultName": {
-                        "value": "[variables('kvName')]"
-                    },
                     "platform":  {
                         "value":"[variables('platform')]"
                     },
-                    "privateEndpointName": {
-                        "value": "mypepname" // TODO: Fill in parameter value
-                    },
                     "vNet": {
                         "value": "[variables('vNet')]"
-                    },
-                    "privateEndpointNicName": {
-                        "value": "" // TODO: Fill in parameter value
                     }
-
                 }
             }
         },

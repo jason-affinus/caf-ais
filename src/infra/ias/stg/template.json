@@ -1,0 +1,35 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+   "parameters": {        
+        "vNet": {
+            "type": "object"
+        },
+        "platform": {
+            "type": "object"
+        }
+
+    },
+    "functions": [],
+    "variables": {
+        "storageAccountName":"[concat('stg',parameters('platform').systemPrefix, parameters('platform').environment,uniqueString(resourceGroup().id) )]"
+    },
+    "resources": [
+         {
+            "apiVersion": "2019-06-01",
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[variables('storageAccountName')]",
+            "location": "[parameters('platform').region]",
+            "tags": {},
+            "sku": {
+                "name": "Standard_LRS"
+            },
+            
+            "properties": {
+                "supportsHttpsTrafficOnly": true,
+                "minimumTlsVersion": "TLS1_2"
+            }
+        }
+    ],
+    "outputs": {}
+}   

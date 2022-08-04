@@ -38,9 +38,7 @@
     "variables": {
         // "keyVaultName": "[concat('kv-ais-', parameters('environment'),'-', parameters('regionId'))]"
         "targetSubResource": {
-            "value": [
-                "vault"
-            ]
+            "value": ["vault"]
         }
     },
     "resources": [
@@ -70,7 +68,7 @@
                         "name": "[parameters('privateEndpointName')]",
                         "properties": {
                             "privateLinkServiceId": "[resourceId('Microsoft.KeyVault/vaults',parameters('keyVaultName'))]",
-                            "groupIds": "[variables('targetSubResource')]"
+                            "groupIds": [ "vault" ]
                         }
                     }
                 ]

@@ -7,6 +7,12 @@
         },
         "platform": {
             "type": "object"
+        },
+        "storage": {
+            "type": "object"
+        },
+        "logicApp": {
+            "type": "object"
         }
 
 
@@ -35,6 +41,83 @@
             "sku": {
                 "Tier": "WorkflowStandard",
                 "Name": "WS1"
+            }
+        },
+        {
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('logicApp').name]",
+            "type": "Microsoft.Web/sites",
+            "kind": "functionapp,workflowapp",
+            "location": "[parameters('platform').region]",
+            "tags": {
+                "hidden-link: /app-insights-resource-id": "/subscriptions/2890a095-7ea1-4a3a-8e93-e2a06352452f/resourceGroups/rg-caf/providers/Microsoft.Insights/components/carappinsights"
+            },
+            "dependsOn": [
+                "microsoft.insights/components/carappinsights",
+                "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
+                "[concat('Microsoft.Storage/storageAccounts/', parameters('storage').name)]"
+            ],
+            "properties": {
+                "name": "[parameters('logicApp').name]",
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "FUNCTIONS_EXTENSION_VERSION",
+                            "value": "~3"
+                        },
+                        {
+                            "name": "FUNCTIONS_WORKER_RUNTIME",
+                            "value": "node"
+                        },
+                        {
+                            "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                            "value": "~14"
+                        },/*
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference('microsoft.insights/components/carappinsights', '2015-05-01').InstrumentationKey]"
+                        },
+                        {
+                            "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                            "value": "[reference('microsoft.insights/components/carappinsights', '2015-05-01').ConnectionString]"
+                        },*/
+                        {
+                            "name": "AzureWebJobsStorage",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storage').name,';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storage').name), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storage').name,';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storage').name), '2019-06-01').keys[0].value,';EndpointSuffix=','core.windows.net')]"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTSHARE",
+                            "value": "[concat(toLower(parameters('logicApp').name), 'b184')]"
+                        },
+                        {
+                            "name": "AzureFunctionsJobHost__extensionBundle__id",
+                            "value": "Microsoft.Azure.Functions.ExtensionBundle.Workflows"
+                        },
+                        {
+                            "name": "AzureFunctionsJobHost__extensionBundle__version",
+                            "value": "\\[1.*, 2.0.0)"
+                        },
+                        {
+                            "name": "APP_KIND",
+                            "value": "workflowApp"
+                        }
+                    ],
+                    "cors": {},
+                    "use32BitWorkerProcess": "true",
+                    "netFrameworkVersion": "v6.0",
+                    "ftpsState": "FtpsOnly"
+                },
+                "serverFarmId": "[resourceId('/providers/Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
+                "clientAffinityEnabled": false,
+                "virtualNetworkSubnetId": null,
+                "httpsOnly": true
+            },
+            "identity": {
+                "type": "SystemAssigned"
             }
         }
     ],

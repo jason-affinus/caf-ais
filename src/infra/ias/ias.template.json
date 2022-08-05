@@ -56,6 +56,12 @@
 
         "nameSuffix": "[concat('-',parameters('systemPrefix'),'-',parameters('environment'),'-',variables('platform').region,'-01')]",
 
+        "storage": {
+            "name": "[concat('stg',variables('platform').systemPrefix, variables('platform').environment,uniqueString(resourceGroup().id))]"
+        },
+        "logicApp": {
+            "name": "[concat('logic',variables('nameSuffix'))]"
+        },
 
         "serviceBusName": "[concat('sbus',variables('nameSuffix'))]",
 
@@ -81,7 +87,7 @@
     },
 
     "resources": [
-        // Key vault name
+        // Key vault 
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2021-04-01",
@@ -112,6 +118,7 @@
             ]
         },
 
+        // VNET
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2021-04-01",
@@ -131,6 +138,7 @@
                 }
             }
         },
+        // Service Bus
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2021-04-01",
@@ -152,6 +160,7 @@
                 "[resourceId('Microsoft.Resources/deployments', 'caf-ais-vnet')]"
             ]
         },
+        // Logic Apps
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2021-04-01",
@@ -168,7 +177,13 @@
                     },
                     "vNet": {
                         "value": "[variables('vNet')]"
-                    }
+                    },
+                     "storage": {
+                        "value": "[variables('storage')]"
+                    },
+                     "logicApp": {
+                         "value":"[variables('logicApp')]"
+                     }
                 }
             },
             "dependsOn": [
@@ -192,7 +207,11 @@
                     },
                     "vNet": {
                         "value": "[variables('vNet')]"
+                    },
+                    "storage": {
+                        "value": "[variables('storage')]"
                     }
+                    
                 }
             },
             "dependsOn": [

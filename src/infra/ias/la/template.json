@@ -50,7 +50,7 @@
             "kind": "functionapp,workflowapp",
             "location": "[parameters('platform').region]",
             "tags": {
-                "hidden-link: /app-insights-resource-id": "/subscriptions/2890a095-7ea1-4a3a-8e93-e2a06352452f/resourceGroups/rg-caf/providers/Microsoft.Insights/components/carappinsights"
+                /*"hidden-link: /app-insights-resource-id": "/subscriptions/2890a095-7ea1-4a3a-8e93-e2a06352452f/resourceGroups/rg-caf/providers/Microsoft.Insights/components/carappinsights"*/
             },
             "dependsOn": [
                 /*"microsoft.insights/components/carappinsights",*/

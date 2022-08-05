@@ -35,8 +35,8 @@
             "properties": {
                 "supportsHttpsTrafficOnly": true,
                 "minimumTlsVersion": "TLS1_2",
-                
-                 "networkAcls": {
+
+                "networkAcls": {
                     "resourceAccessRules": [],
                     "bypass": "None",
                     "virtualNetworkRules": [],
@@ -121,6 +121,33 @@
                 "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]"
             ]
         },
+
+        {
+            "type": "Microsoft.Network/privateDnsZones",
+            "apiVersion": "2018-09-01",
+            "name": "[string('privatelink.table.core.windows.net')]",
+            "location": "global",
+            "tags": {},
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+            "apiVersion": "2018-09-01",
+            "name": "[concat(string('privatelink.table.core.windows.net'), '/', uniqueString(resourceId('Microsoft.Network/virtualNetworks', parameters('vNet').name)))]",
+            "location": "global",
+            "dependsOn": [
+                "[string('privatelink.table.core.windows.net')]"
+            ],
+            "properties": {
+                "virtualNetwork": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vNet').name)]"
+                },
+                "registrationEnabled": false
+            }
+        },
+
+
+
         {
             "location": "[parameters('platform').region]",
             "name": "[format(variables('pepName'),'file')]",
@@ -146,6 +173,33 @@
                 "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]"
             ]
         },
+
+
+        {
+            "type": "Microsoft.Network/privateDnsZones",
+            "apiVersion": "2018-09-01",
+            "name": "[string('privatelink.file.core.windows.net')]",
+            "location": "global",
+            "tags": {},
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+            "apiVersion": "2018-09-01",
+            "name": "[concat(string('privatelink.file.core.windows.net'), '/', uniqueString(resourceId('Microsoft.Network/virtualNetworks', parameters('vNet').name)))]",
+            "location": "global",
+            "dependsOn": [
+                "[string('privatelink.file.core.windows.net')]"
+            ],
+            "properties": {
+                "virtualNetwork": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vNet').name)]"
+                },
+                "registrationEnabled": false
+            }
+        },
+
+
         {
             "location": "[parameters('platform').region]",
             "name": "[format(variables('pepName'),'queue')]",
@@ -170,7 +224,34 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]"
             ]
-        }
+        },
+
+
+        {
+            "type": "Microsoft.Network/privateDnsZones",
+            "apiVersion": "2018-09-01",
+            "name": "[string('privatelink.queue.core.windows.net')]",
+            "location": "global",
+            "tags": {},
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+            "apiVersion": "2018-09-01",
+            "name": "[concat(string('privatelink.queue.core.windows.net'), '/', uniqueString(resourceId('Microsoft.Network/virtualNetworks', parameters('vNet').name)))]",
+            "location": "global",
+            "dependsOn": [
+                "[string('privatelink.queue.core.windows.net')]"
+            ],
+            "properties": {
+                "virtualNetwork": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vNet').name)]"
+                },
+                "registrationEnabled": false
+            }
+        },
+
+
     ],
     "outputs": {}
 }

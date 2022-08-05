@@ -9,13 +9,16 @@
             "type": "object"
         },
         "storage": {
-           "type":"object"
+            "type": "object"
         }
 
     },
     "functions": [],
     "variables": {
-       // "storageAccountName": "[concat('stg',parameters('platform').systemPrefix, parameters('platform').environment,uniqueString(resourceGroup().id) )]"
+        // "storageAccountName": "[concat('stg',parameters('platform').systemPrefix, parameters('platform').environment,uniqueString(resourceGroup().id) )]"
+        "pepName": "[concat('pep-',parameters('platform').systemPrefix,'-stg-blog-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
+        "pepNicName": "[concat('nic-',parameters('platform').systemPrefix,'-stg-blob-',parameters('platform').environment,'-',parameters('platform').region,'-01')]"
+
     },
     "resources": [
         {
@@ -32,6 +35,32 @@
                 "supportsHttpsTrafficOnly": true,
                 "minimumTlsVersion": "TLS1_2"
             }
+        },
+        {
+            "location": "[parameters('platform').region]",
+            "name": "[variables('pepName')]",
+            "type": "Microsoft.Network/privateEndpoints",
+            "apiVersion": "2021-05-01",
+            "properties": {
+                "subnet": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnet').name, parameters('vnet').privateLink.name)]"
+                },
+                "customNetworkInterfaceName": "[variables('pepNicName')]",
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "[variables('pepName')]",
+                        "properties": {
+                            "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]",
+                            "groupIds": [ "blob" ]
+                        }
+                    }
+                ]
+            },
+            "tags": {},
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]"
+
+            ]
         }
     ],
     "outputs": {}

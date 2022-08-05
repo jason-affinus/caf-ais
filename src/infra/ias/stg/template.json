@@ -7,18 +7,21 @@
         },
         "platform": {
             "type": "object"
+        },
+        "storage": {
+           "type":"object"
         }
 
     },
     "functions": [],
     "variables": {
-        "storageAccountName": "[concat('stg',parameters('platform').systemPrefix, parameters('platform').environment,uniqueString(resourceGroup().id) )]"
+       // "storageAccountName": "[concat('stg',parameters('platform').systemPrefix, parameters('platform').environment,uniqueString(resourceGroup().id) )]"
     },
     "resources": [
         {
             "apiVersion": "2019-06-01",
             "type": "Microsoft.Storage/storageAccounts",
-            "name": "[variables('storageAccountName')]",
+            "name": "[parameters('storage').name]",
             "location": "[parameters('platform').region]",
             "tags": {},
             "sku": {

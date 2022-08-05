@@ -35,7 +35,14 @@
             "properties": {
                 "supportsHttpsTrafficOnly": true,
                 "minimumTlsVersion": "TLS1_2",
-                "publicNetworkAccess": "Disabled"
+                
+                 "networkAcls": {
+                    "resourceAccessRules": [],
+                    "bypass": "None",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Deny"
+                }
             }
         },
         {

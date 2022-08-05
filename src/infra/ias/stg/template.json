@@ -34,7 +34,8 @@
 
             "properties": {
                 "supportsHttpsTrafficOnly": true,
-                "minimumTlsVersion": "TLS1_2"
+                "minimumTlsVersion": "TLS1_2",
+                "publicNetworkAccess": "Disabled"
             }
         },
         {
@@ -62,6 +63,32 @@
                 "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]"
             ]
         },
+        {
+            "type": "Microsoft.Network/privateDnsZones",
+            "apiVersion": "2018-09-01",
+            "name": "[string('privatelink.blob.core.windows.net')]",
+            "location": "global",
+            "tags": {},
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+            "apiVersion": "2018-09-01",
+            "name": "[concat(string('privatelink.blob.core.windows.net'), '/', uniqueString(resourceId('Microsoft.Network/virtualNetworks', parameters('vNet').name)))]",
+            "location": "global",
+            "dependsOn": [
+                "[string('privatelink.blob.core.windows.net')]"
+            ],
+            "properties": {
+                "virtualNetwork": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vNet').name))]"
+                },
+                "registrationEnabled": false
+            }
+        },
+
+
+
         {
             "location": "[parameters('platform').region]",
             "name": "[format(variables('pepName'),'table')]",

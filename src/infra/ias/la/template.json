@@ -53,7 +53,7 @@
                 "hidden-link: /app-insights-resource-id": "/subscriptions/2890a095-7ea1-4a3a-8e93-e2a06352452f/resourceGroups/rg-caf/providers/Microsoft.Insights/components/carappinsights"
             },
             "dependsOn": [
-                "microsoft.insights/components/carappinsights",
+                /*"microsoft.insights/components/carappinsights",*/
                 "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
                 "[concat('Microsoft.Storage/storageAccounts/', parameters('storage').name)]"
             ],

@@ -55,7 +55,8 @@
             "dependsOn": [
                 
                 "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
-                "[concat('Microsoft.Storage/storageAccounts/', parameters('storage').name)]"
+                "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]"
+                
             ],
             "properties": {
                 "name": "[parameters('logicApp').name]",

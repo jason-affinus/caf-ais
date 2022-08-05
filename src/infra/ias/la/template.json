@@ -54,8 +54,7 @@
             },
             "dependsOn": [
                 
-                "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
-                "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]"
+                "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"                
                 
             ],
             "properties": {

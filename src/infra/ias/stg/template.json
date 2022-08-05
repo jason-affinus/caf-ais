@@ -27,6 +27,7 @@
             "name": "[parameters('storage').name]",
             "location": "[parameters('platform').region]",
             "tags": {},
+            "kind": "StorageV2",
             "sku": {
                 "name": "Standard_LRS"
             },

@@ -81,7 +81,7 @@
             ],
             "properties": {
                 "virtualNetwork": {
-                    "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vNet').name))]"
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vNet').name)]"
                 },
                 "registrationEnabled": false
             }

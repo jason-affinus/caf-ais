@@ -58,7 +58,7 @@
             },
             "tags": {},
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]"
+               // "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]"
 
             ]
         }

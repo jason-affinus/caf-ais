@@ -25,13 +25,13 @@
             "location": "[parameters('platform').region]",
             "sku": {
                 "name": "[parameters('apim').tier]",
-                "capacity": "1"
+                "capacity": 1
             },
-            "identity": "[parameters('apim').identity]",
+            //"identity": "[parameters('apim').identity]",
             
             "properties": {
                 "publisherEmail": "[parameters('apim').adminEmail]",
-                "publisherName": "[parameters('apim').organisation]",
+                "publisherName": "[parameters('apim').organisation]"
             },
             "resources": [],
             "dependsOn": []

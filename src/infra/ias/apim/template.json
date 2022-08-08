@@ -21,7 +21,7 @@
         {
             "type": "Microsoft.ApiManagement/service",
             "apiVersion": "2021-01-01-preview",
-            "name": "[parameters('apim').name]]",
+            "name": "[parameters('apim').name]",
             "location": "[parameters('platform').region]",
             "sku": {
                 "name": "[parameters('apim').tier]",

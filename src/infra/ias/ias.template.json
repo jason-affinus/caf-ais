@@ -269,7 +269,7 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'caf-ais-logicapp')]",
                 "[resourceId('Microsoft.Resources/deployments', 'caf-ais-vnet')]",
-                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-stg')]"
+                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-storage')]"
             ]
         },
          // apim

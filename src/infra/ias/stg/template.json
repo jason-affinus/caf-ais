@@ -41,7 +41,7 @@
                     "bypass": "None",
                     "virtualNetworkRules": [],
                     "ipRules": [],
-                    "defaultAction": "Deny"
+                    "defaultAction": "Allow" // TODO
                 }
             }
         }

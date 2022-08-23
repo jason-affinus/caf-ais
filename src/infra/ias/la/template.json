@@ -19,7 +19,8 @@
     },
     "functions": [],
     "variables": {
-        "hostingPlanName":"[concat('plan-',parameters('platform').systemPrefix,'-logic-',parameters('platform').environment,'-',parameters('platform').region,'-01')]"
+        "hostingPlanName":"[concat('plan-',parameters('platform').systemPrefix,'-logic-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
+        "AzureFunctionsJobHost__extensionBundle__version": "[1.*, 2.0.0)",
     },
     "resources": [
         {
@@ -91,7 +92,7 @@
                         },
                         {
                             "name": "AzureFunctionsJobHost__extensionBundle__version",
-                            "value": "[[1.*, 2.0.0)"
+                            "value": "[variables('AzureFunctionsJobHost__extensionBundle__version')]"
                         },
                         {
                             "name": "APP_KIND",

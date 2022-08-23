@@ -77,7 +77,7 @@
             "name": "[concat('logic',variables('nameSuffix'))]"
         },
         "apim": {
-            "name": "[concat('apim2',variables('nameSuffix'))]",
+            "name": "[concat('apim',variables('nameSuffix'))]",
             "tier": "Developer",
             "capacity": "1",
             "identity": "None",

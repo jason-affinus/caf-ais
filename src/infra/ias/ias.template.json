@@ -262,6 +262,9 @@
                     },
                     "storage": {
                         "value": "[variables('storage')]"
+                    },
+                     "logicApp": {
+                        "value": "[variables('logicApp')]"
                     }
 
                 }

@@ -10,30 +10,36 @@
         },
         "storage": {
             "type": "object"
+        },
+        "logic": {
+            "type": "object"
         }
 
     },
     "functions": [],
     "variables": {
         // "storageAccountName": "[concat('stg',parameters('platform').systemPrefix, parameters('platform').environment,uniqueString(resourceGroup().id) )]"
-        "pepName": "[concat('pep-',parameters('platform').systemPrefix,'-stg-{0}-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
-        "pepNicName": "[concat('nic-',parameters('platform').systemPrefix,'-stg-{0}-',parameters('platform').environment,'-',parameters('platform').region,'-01')]"
+        "stgPepName": "[concat('pep-',parameters('platform').systemPrefix,'-stg-{0}-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
+        "stgPepNicName": "[concat('nic-',parameters('platform').systemPrefix,'-stg-{0}-',parameters('platform').environment,'-',parameters('platform').region,'-01')]"
+        "logPepName": "[concat('pep-',parameters('platform').systemPrefix,'-{0}-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
+        "logPepNicName": "[concat('nic-',parameters('platform').systemPrefix,'-stg-{0}-',parameters('platform').environment,'-',parameters('platform').region,'-01')]"
 
     },
     "resources": [
+        // Storage blob endpoint
         {
             "location": "[parameters('platform').region]",
-            "name": "[format(variables('pepName'),'blob')]",
+            "name": "[format(variables('stgPepName'),'blob')]",
             "type": "Microsoft.Network/privateEndpoints",
             "apiVersion": "2021-05-01",
             "properties": {
                 "subnet": {
                     "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnet').name, parameters('vnet').privateLink.name)]"
                 },
-                "customNetworkInterfaceName": "[format(variables('pepNicName'),'blob')]",
+                "customNetworkInterfaceName": "[format(variables('stgPepNicName'),'blob')]",
                 "privateLinkServiceConnections": [
                     {
-                        "name": "[format(variables('pepName'),'blob')]",
+                        "name": "[format(variables('stgPepName'),'blob')]",
                         "properties": {
                             "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]",
                             "groupIds": [ "blob" ]
@@ -43,7 +49,7 @@
             },
             "tags": {},
             "dependsOn": [
-         //       "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]"
+                //       "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]"
             ]
         },
         {
@@ -74,17 +80,17 @@
 
         {
             "location": "[parameters('platform').region]",
-            "name": "[format(variables('pepName'),'table')]",
+            "name": "[format(variables('stgPepName'),'table')]",
             "type": "Microsoft.Network/privateEndpoints",
             "apiVersion": "2021-05-01",
             "properties": {
                 "subnet": {
                     "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnet').name, parameters('vnet').privateLink.name)]"
                 },
-                "customNetworkInterfaceName": "[format(variables('pepNicName'),'table')]",
+                "customNetworkInterfaceName": "[format(variables('stgPepNicName'),'table')]",
                 "privateLinkServiceConnections": [
                     {
-                        "name": "[format(variables('pepName'),'table')]",
+                        "name": "[format(variables('stgPepName'),'table')]",
                         "properties": {
                             "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]",
                             "groupIds": [ "table" ]
@@ -94,7 +100,7 @@
             },
             "tags": {},
             "dependsOn": [
-          //      "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]"
+                //      "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]"
             ]
         },
 
@@ -126,17 +132,17 @@
 
         {
             "location": "[parameters('platform').region]",
-            "name": "[format(variables('pepName'),'file')]",
+            "name": "[format(variables('stgPepName'),'file')]",
             "type": "Microsoft.Network/privateEndpoints",
             "apiVersion": "2021-05-01",
             "properties": {
                 "subnet": {
                     "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnet').name, parameters('vnet').privateLink.name)]"
                 },
-                "customNetworkInterfaceName": "[format(variables('pepNicName'),'file')]",
+                "customNetworkInterfaceName": "[format(variables('stgPepNicName'),'file')]",
                 "privateLinkServiceConnections": [
                     {
-                        "name": "[format(variables('pepName'),'file')]",
+                        "name": "[format(variables('stgPepName'),'file')]",
                         "properties": {
                             "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]",
                             "groupIds": [ "file" ]
@@ -146,7 +152,7 @@
             },
             "tags": {},
             "dependsOn": [
-             //   "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]"
+                //   "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]"
             ]
         },
 
@@ -178,17 +184,17 @@
 
         {
             "location": "[parameters('platform').region]",
-            "name": "[format(variables('pepName'),'queue')]",
+            "name": "[format(variables('stgPepName'),'queue')]",
             "type": "Microsoft.Network/privateEndpoints",
             "apiVersion": "2021-05-01",
             "properties": {
                 "subnet": {
                     "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnet').name, parameters('vnet').privateLink.name)]"
                 },
-                "customNetworkInterfaceName": "[format(variables('pepNicName'),'queue')]",
+                "customNetworkInterfaceName": "[format(variables('stgPepNicName'),'queue')]",
                 "privateLinkServiceConnections": [
                     {
-                        "name": "[format(variables('pepName'),'queue')]",
+                        "name": "[format(variables('stgPepName'),'queue')]",
                         "properties": {
                             "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]",
                             "groupIds": [ "queue" ]
@@ -225,6 +231,40 @@
                 },
                 "registrationEnabled": false
             }
+        },
+        // Logic App PEP
+        {
+            "location": "[parameters('platform').region]",
+            "name": "[concat('pep-',parameters('platform').systemPrefix,'-logic-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
+            "type": "Microsoft.Network/privateEndpoints",
+            "apiVersion": "2021-05-01",
+            "properties": {
+                "subnet": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnet').name, parameters('vnet').privateLink.name)]"
+                },
+                "customNetworkInterfaceName": "[concat('nic-',parameters('platform').systemPrefix,'-logic-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "[concat('pep-',parameters('platform').systemPrefix,'-logic-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
+                        "properties": {
+                            "privateLinkServiceId": "[resourceId('Microsoft.Web/sites',parameters('logic').name)]",
+                            "groupIds": [ "sites" ]
+                        }
+                    }
+                ]
+            },
+            "tags": {},
+            "dependsOn": [
+                //"[resourceId('Microsoft.Storage/storageAccounts',parameters('storage').name)]"
+            ]
+        },
+        {
+            "type": "Microsoft.Network/privateDnsZones",
+            "apiVersion": "2018-09-01",
+            "name": "[string('privatelink.azurewebsites.net')]",
+            "location": "global",
+            "tags": {},
+            "properties": {}
         }
 
 

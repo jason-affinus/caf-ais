@@ -31,7 +31,7 @@
             "location": "[parameters('platform').region]",
             "name": "[format(variables('stgPepName'),'blob')]",
             "type": "Microsoft.Network/privateEndpoints",
-            "apiVersion": "2020-11-01",
+            "apiVersion": "2021-05-01",
             "properties": {
                 "subnet": {
                     "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnet').name, parameters('vnet').privateLink.name)]"
@@ -82,7 +82,7 @@
             "location": "[parameters('platform').region]",
             "name": "[format(variables('stgPepName'),'table')]",
             "type": "Microsoft.Network/privateEndpoints",
-            "apiVersion": "2020-11-01",
+            "apiVersion": "2021-05-01",
             "properties": {
                 "subnet": {
                     "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnet').name, parameters('vnet').privateLink.name)]"
@@ -134,7 +134,7 @@
             "location": "[parameters('platform').region]",
             "name": "[format(variables('stgPepName'),'file')]",
             "type": "Microsoft.Network/privateEndpoints",
-            "apiVersion": "2020-11-01",
+            "apiVersion": "2021-05-01",
             "properties": {
                 "subnet": {
                     "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnet').name, parameters('vnet').privateLink.name)]"
@@ -186,7 +186,7 @@
             "location": "[parameters('platform').region]",
             "name": "[format(variables('stgPepName'),'queue')]",
             "type": "Microsoft.Network/privateEndpoints",
-            "apiVersion": "2020-11-01",
+            "apiVersion": "2021-05-01",
             "properties": {
                 "subnet": {
                     "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnet').name, parameters('vnet').privateLink.name)]"
@@ -237,7 +237,7 @@
             "location": "[parameters('platform').region]",
             "name": "[concat('pep-',parameters('platform').systemPrefix,'-logic-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
             "type": "Microsoft.Network/privateEndpoints",
-            "apiVersion": "2020-11-01",
+            "apiVersion": "2021-05-01",
             "properties": {
                 "subnet": {
                     "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnet').name, parameters('vnet').privateLink.name)]"

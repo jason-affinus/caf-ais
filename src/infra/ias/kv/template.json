@@ -60,7 +60,7 @@
             "location": "[parameters('platform').region]",
             "name": "[variables('pepName')]",
             "type": "Microsoft.Network/privateEndpoints",
-            "apiVersion": "2021-05-01",
+            "apiVersion": "2020-11-01",
             "properties": {
                 "subnet": {
                     "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnet').name, parameters('vnet').privateLink.name)]"

@@ -26,6 +26,7 @@
             "location": "[parameters('platform').region]",
             "properties": {
                 "enableRbacAuthorization": true,
+                "publicNetworkAccess": "Disabled",
                 "tenantId": "[tenant().tenantId]",
                 "sku": {
                     "family": "A",

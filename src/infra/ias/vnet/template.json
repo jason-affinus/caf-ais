@@ -135,6 +135,12 @@
 						"properties": {
 							"addressPrefix": "[parameters('vNet').privateLink.address]"
 						}
+					},
+					{
+						"name": "[parameters('vNet').VM.name]",
+						"properties": {
+							"addressPrefix": "[parameters('vNet').VM.address]"
+						}
 					}
 				]
 			}

@@ -104,6 +104,10 @@
             "privateLink": {
                 "name": "[concat('snet-',parameters('systemPrefix'),'-privatelink-',parameters('environment'),'-',variables('platform').region,'-01')]",
                 "address": "[parameters('privateLinkSubnet')]"
+            },
+            "VM": {
+                "name": "[concat('snet-',parameters('systemPrefix'),'-vm-',parameters('environment'),'-',variables('platform').region,'-01')]",
+                "address": "[parameters('privateLinkSubnet')]"
             }
         }
 

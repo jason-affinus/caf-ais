@@ -17,7 +17,7 @@ Work In Progress
 
 V3
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fstgjhcaf.z33.web.core.windows.net%2Fcaf-ais%2Fmain%2Fsrc%2Finfra%2Fias%2Fdeployment.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fstgjhcaf.z33.web.core.windows.net%2Fdeployment.json)
 
 V2 
 

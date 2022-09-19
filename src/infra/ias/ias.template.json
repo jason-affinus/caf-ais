@@ -211,7 +211,7 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'caf-ais-vnet')]",
-                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-storage')]"
+                //"[resourceId('Microsoft.Resources/deployments', 'caf-ais-storage')]"
             ]
         }
        /*

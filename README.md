@@ -15,15 +15,6 @@ The reference implementation provides prescriptive guidance coupled with Azure b
 
 Work In Progress
 
-V3 (Azure Storage)
-
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fstgjhcaf.z33.web.core.windows.net%2Fdeployment.json)
-
-V2 
-
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjason-affinus%2Fcaf-ais%2Fmain%2Fsrc%2Finfra%2Fias%2Fdeployment.json)
-
-
 Hit this button to deploy the ARM template as seen in this repository:
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjason-affinus%2Fcaf-ais%2Fmain%2Fsrc%2Finfra%2Fias%2Fias.template.json)

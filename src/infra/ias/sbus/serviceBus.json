@@ -28,6 +28,7 @@
 				"name": "[parameters('serviceBus').sku]"				
 			},
 			"properties": {
+				"publicNetworkAccess": "Disabled",
 				"disableLocalAuth": false,
 				"zoneRedundant": false
 			}
@@ -63,7 +64,7 @@
                         "name": "[variables('pepName')]",
                         "properties": {
                             "privateLinkServiceId": "[resourceId('Microsoft.ServiceBus/namespaces',parameters('serviceBus').name)]",
-                            "groupIds": [ "vault" ]
+                            "groupIds": [ "namespace" ]
                         }
                     }
                 ]

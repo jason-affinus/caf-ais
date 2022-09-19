@@ -157,10 +157,10 @@
                         "value": "[variables('vNet').name]"
                     },
                     "privateEndpointVNETResourcegroup": {
-                        "value": "[resourceGroup()]"
+                        "value": "[resourceGroup().name]"
                     },
                     "privateDnsResourceGroup": {
-                        "value": "[resourceGroup()]"
+                        "value": "[resourceGroup().name]"
                     },
                     "privateDnsSubscriptionID": {
                         "value": "[subscription().id]"

@@ -21,6 +21,9 @@
     "variables": {
         "hostingPlanName":"[concat('plan-',parameters('platform').systemPrefix,'-logic-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
         "AzureFunctionsJobHost__extensionBundle__version": "[1.*, 2.0.0)",
+        "stgPepName": "[concat('pep-',parameters('platform').systemPrefix,'-stg-{0}-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
+        "stgPepNicName": "[concat('nic-',parameters('platform').systemPrefix,'-stg-{0}-',parameters('platform').environment,'-',parameters('platform').region,'-01')]"
+
     },
     "resources": [
 

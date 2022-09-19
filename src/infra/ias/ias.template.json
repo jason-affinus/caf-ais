@@ -45,6 +45,13 @@
                 "description": "CIDR address prefix for the private link."
             }
         },
+         "VMSubnet": {
+            "type": "string",
+            "defaultValue": "192.168.20.0/24",
+            "metadata": {
+                "description": "CIDR address prefix for the private link."
+            }
+        },
         "apimAdminEmail": {
             "type": "string",
             "defaultValue": "admin@domain.com",
@@ -118,7 +125,7 @@
             },
             "VM": {
                 "name": "[concat('snet-',parameters('systemPrefix'),'-vm-',parameters('environment'),'-',variables('platform').region,'-01')]",
-                "address": "[parameters('privateLinkSubnet')]"
+                "address": "[parameters('VMSubnet')]"
             }
         }
 

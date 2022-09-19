@@ -382,7 +382,7 @@
                         },
                         {
                             "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
-                            "value": "[reference(resourceId('Microsoft.Insights/components', parameters('appInsights').name), '2020-02-01', 'Full').ConnectionString]"
+                            "value": "[reference(resourceId('Microsoft.Insights/components', parameters('appInsights').name), '2020-02-02', 'Full').ConnectionString]"
                         }
                     ],
                     "cors": {},

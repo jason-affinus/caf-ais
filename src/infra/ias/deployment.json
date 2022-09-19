@@ -136,7 +136,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "MDM-Deploy-KeyVaultwithPE",
+            "name": "caf-ais-key-vault-with-pe",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {

@@ -245,7 +245,7 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'caf-ais-vnet')]",
-                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-app-inisghts')]"
+                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-app-insights')]"
             ]
         },
         // apim

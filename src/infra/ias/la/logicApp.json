@@ -40,6 +40,7 @@
             },
 
             "properties": {
+                "publicNetworkAccess": "Disabled",
                 "supportsHttpsTrafficOnly": true,
                 "minimumTlsVersion": "TLS1_2",
 
@@ -48,7 +49,7 @@
                     "bypass": "None",
                     "virtualNetworkRules": [],
                     "ipRules": [],
-                    "defaultAction": "Allow" // TODO
+                    "defaultAction": "Deny"
                 }
             }
         },
@@ -294,13 +295,6 @@
             "tags": {},
             "properties": {}
         },
-
-
-
-
-
-
-
 
         // hosting plan
         {

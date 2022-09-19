@@ -29,8 +29,7 @@
                 "tenantId": "[tenant().tenantId]",
                 "sku": {
                     "family": "A",
-                    "name": "[parameters('keyVault').skuname]",
-                    "tier": "[parameters('keyVault').skutier]",
+                    "name": "[parameters('keyVault').sku]"
                 },
                 "networkAcls": {
                     "bypass": "AzureServices",

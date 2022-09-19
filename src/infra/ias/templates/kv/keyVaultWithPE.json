@@ -26,8 +26,8 @@
 
     },
     "variables": {
-        "ltKeyVault": "[uri(deployment().properties.templateLink.uri, 'templates/components/keyVault.json')]",
-        "ltPrivateEndpoint": "[uri(deployment().properties.templateLink.uri, 'templates/components/privateEndpoint.json')]"
+        "ltKeyVault": "[uri(deployment().properties.templateLink.uri, './components/keyVault.json')]",
+        "ltPrivateEndpoint": "[uri(deployment().properties.templateLink.uri, './components/privateEndpoint.json')]"
     },
     "functions": [],
     "resources": [

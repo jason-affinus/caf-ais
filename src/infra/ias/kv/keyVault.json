@@ -29,7 +29,7 @@
                 "tenantId": "[tenant().tenantId]",
                 "sku": {
                     "family": "A",
-                    "name": "[parameters('keyVault').name]"
+                    "name": "[parameters('keyVault').sku]"
                 },
                 "networkAcls": {
                     "bypass": "AzureServices",

@@ -259,7 +259,6 @@
                 "[resourceId('Microsoft.Resources/deployments', 'caf-ais-vnet')]"
             ]
         }
-     */
     ],
     "outputs": {
     }

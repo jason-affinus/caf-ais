@@ -191,7 +191,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'la/template.json')]",
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'la/logicApp.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -213,7 +213,8 @@
                 "[resourceId('Microsoft.Resources/deployments', 'caf-ais-vnet')]",
                 "[resourceId('Microsoft.Resources/deployments', 'caf-ais-storage')]"
             ]
-        },
+        }
+       /*
         // storage
         {
             "type": "Microsoft.Resources/deployments",
@@ -303,7 +304,7 @@
                 "[resourceId('Microsoft.Resources/deployments', 'caf-ais-vnet')]"
             ]
         }
-
+     */
     ],
     "outputs": {
     }

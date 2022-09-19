@@ -15,7 +15,7 @@ The reference implementation provides prescriptive guidance coupled with Azure b
 
 Work In Progress
 
-V3
+V3 (Azure Storage)
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fstgjhcaf.z33.web.core.windows.net%2Fdeployment.json)
 

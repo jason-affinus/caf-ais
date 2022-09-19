@@ -77,7 +77,7 @@
         },
 
 
-
+        // table pep
         {
             "location": "[parameters('platform').region]",
             "name": "[format(variables('stgPepName'),'table')]",
@@ -128,7 +128,7 @@
             }
         },
 
-
+        // file pep
 
         {
             "location": "[parameters('platform').region]",
@@ -181,7 +181,8 @@
             }
         },
 
-
+        // queue pep
+        
         {
             "location": "[parameters('platform').region]",
             "name": "[format(variables('stgPepName'),'queue')]",

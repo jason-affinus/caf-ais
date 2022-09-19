@@ -1,0 +1,718 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    
+    "parameters": {
+        "privateEndpointSubnet": {
+			"type": "String",
+            "defaultValue": "default"
+        },
+        "privateEndpointVNET": {
+			"type": "String",
+            "defaultValue": "TEST_DMS10-vnet"
+        },
+        "privateEndpointVNETResourcegroup": {
+			"type": "String",
+            "defaultValue": "TEST_DMS10"
+        },
+        "privateDnsResourceGroup": {
+			"type": "String",
+            "defaultValue": "TEST_DMS10"
+        },
+        "logAnalyticsParameters": {
+			"type": "Object",
+            "defaultValue": {
+                "logAnalyticsName": "log-mdm-test-ukwest-003"
+            }
+        },
+        "applicationInsightsParameters": {
+			"type": "Object",
+            "defaultValue": {
+                "appInsightsName": "appi-mdm-test-ukwest-003"
+            }
+        },
+        "dataFactoryParameters": {
+			"type": "Object",
+            "defaultValue": {
+                "dataFactoryName": "df-mdm-test-ukwest-003"
+            }
+        },
+        "logicAppParameters": {
+			"type": "Object",
+            "defaultValue": {
+                "logicAppPlanName": "plan-mdm-test-ukwest-003",
+                "logicAppPlanSKUName": "WS1",
+                "logicAppPrivateStorageName": "stlogicprvtestukwest003",
+                "logicAppVNETIntegrationSubnet": "snet-mdmlogic-test-ukwest-003",
+                "logicApps": [
+                    {
+                        "name": "logic-d365-test-ukwest-003",
+                        "CustomAppSettings": [
+                            {
+                                "name": "mdm_sql_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDMDBConnectionString/)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "logic-elite3e-test-ukwest-003",
+                        "CustomAppSettings": [
+                            {
+                                "name": "elite_server",
+                                "defaultValue": "http://azt-wapi-dev-dms10.ukwest.cloudapp.azure.com/TE_3E_30Sample"
+                            },
+                            {
+                                "name": "mdm_environment",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-IntApp-Alert-EmailAddress/)"
+                            },
+                            {
+                                "name": "mdm_sb_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/ServiceBusSENDSAS/)"
+                            },
+                            {
+                                "name": "mdm_sb_receive_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/ServiceBusReceiveSAS/)"
+                            },
+                            {
+                                "name": "mdm_sb_send_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/ServiceBusSendSAS/)"
+                            },
+                            {
+                                "name": "mdm_sendgrid_connectionruntimeurl",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-SendGrid-ConnectionRuntimeURL/)"
+                            },
+                            {
+                                "name": "mdm_sql_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDMDBConnectionString/)"
+                            },
+                            {
+                                "name": "mdm_alert_email_address",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-IntApp-Alert-EmailAddress/)"
+                            },
+                            {
+                                "name": "oanda_api_baseurl",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/Oanda-Api-BaseURL/)"
+                            },
+                            {
+                                "name": "oanda_api_key",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/Oanda-Api-Key/)"
+                            },
+                            {
+                                "name": "mdm_func_gtwytre_audience",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-Func-GtwyTre-Audience/)"
+                            },
+                            {
+                                "name": "mdm_func_gtwytre_authtype",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-Func-GgtwyTre-Authtype/)"
+                            },
+                            {
+                                "name": "mdm_func_gtwytre_baseurl",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-Func-GtwyTre-BaseURL/)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "logic-hr-test-ukwest-003",
+                        "CustomAppSettings": [
+                            {
+                                "name": "hr_sql_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/HRDBConnectionString/)"
+                            },
+                            {
+                                "name": "mdm_alert_from_email_address",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-Alert-From-EmailAddress/)"
+                            },
+                            {
+                                "name": "mdm_environment",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-Environment/)"
+                            },
+                            {
+                                "name": "mdm_sb_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/ServiceBusSENDSAS/)"
+                            },
+                            {
+                                "name": "mdm_sb_send_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/ServiceBusSendSAS/)"
+                            },
+                            {
+                                "name": "mdm_sendgrid_connectionruntimeurl",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-SendGrid-ConnectionRuntimeURL/)"
+                            },
+                            {
+                                "name": "mdm_sql_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDMDBConnectionString/)"
+                            },
+                            {
+                                "name": "mdm_alert_email_address",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-IntApp-Alert-EmailAddress/)"
+                            },
+                            {
+                                "name": "mdm_subscription_id",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-SubscriptionId/)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "logic-intapp-test-ukwest-003",
+                        "CustomAppSettings": [
+                            {
+                                "name": "mdm_sql_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDMDBConnectionString/)"
+                            },
+                            {
+                                "name": "mdm_alert_email_address",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-IntApp-Alert-EmailAddress/)"
+                            },
+                            {
+                                "name": "mdm_alert_from_email_address",
+                                "defaultValue": "@@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-Alert-From-EmailAddress/)"
+                            },
+                            {
+                                "name": "mdm_environment",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-Environment/)"
+                            },
+                            {
+                                "name": "mdm_intapp_clientid",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-IntApp-ClientId/)"
+                            },
+                            {
+                                "name": "mdm_intapp_clientsecret",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-IntApp-ClientSecret/)"
+                            },
+                            {
+                                "name": "mdm_intapp_server",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-IntApp-Server/)"
+                            },
+                            {
+                                "name": "mdm_intapp_userdomain",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-IntApp-UserDomain/)"
+                            },
+                            {
+                                "name": "mdm_sb_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/ServiceBusSENDSAS/)"
+                            },
+                            {
+                                "name": "mdm_sb_send_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/ServiceBusSendSAS/)"
+                            },
+                            {
+                                "name": "mdm_sb_receive_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/ServiceBusReceiveSAS/)"
+                            },
+                            {
+                                "name": "mdm_sendgrid_connectionruntimeurl",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-SendGrid-ConnectionRuntimeURL/)"
+                            },
+                            {
+                                "name": "WEBSITE_LOAD_ROOT_CERTIFICATES",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-IntApp-RootCerts/)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "logic-mdm-test-ukwest-003",
+                        "CustomAppSettings": [
+                            {
+                                "name": "mdm_sql_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDMDBConnectionString/)"
+                            },
+                            {
+                                "name": "mdm_alert_email_address",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-IntApp-Alert-EmailAddress/)"
+                            },
+                            {
+                                "name": "mdm_alert_from_email_address",
+                                "defaultValue": "@@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-Alert-From-EmailAddress/)"
+                            },
+                            {
+                                "name": "mdm_environment",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-Environment/)"
+                            },
+                            {
+                                "name": "mdm_sb_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/ServiceBusSENDSAS/)"
+                            },
+                            {
+                                "name": "mdm_sb_send_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/ServiceBusSendSAS/)"
+                            },
+                            {
+                                "name": "mdm_sb_receive_connectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/ServiceBusReceiveSAS/)"
+                            },
+                            {
+                                "name": "mdm_sendgrid_connectionruntimeurl",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-SendGrid-ConnectionRuntimeURL/)"
+                            },
+                            {
+                                "name": "mdm_subscription_id",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-SubscriptionId/)"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "functionAppParameters": {
+			"type": "Object",
+            "defaultValue": {
+                "functionAppPlanName": "plan-gtwy-test-ukwest-003",
+                "functionAppPlanSKUName": "EP1",
+                "functionAppPrivateStorageName": "stgtwyprvtestukwest003",
+                "functionAppVNETIntegrationSubnet": "snet-mdmfunc-test-ukwest-003",
+                "functionApps": [
+                    {
+                        "name": "func-gtwytre-test-ukwest-003",
+                        "aadAppRegistrationClientID": "d43fc649-86ed-496e-8742-85a5b73ae8c0",
+                        "CustomAppSettings": [
+                            {
+                                "name": "TransactionService:Domain",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-ApiGateway-3E-Domain/)"
+                            },
+                            {
+                                "name": "TransactionService:EndpointAddress",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-ApiGateway-3E-EndpointAddress/)"
+                            },
+                            {
+                                "name": "TransactionService:Username",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-ApiGateway-3E-NTLM-Username/)"
+                            },
+                            {
+                                "name": "TransactionService:Password",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-ApiGateway-3E-NTLM-Password/)"
+                            },
+                            {
+                                "name": "ThomsonReutersSqlServerConfig:ConnectionString",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-ApiGateway-3E-SQL-ConnectionString/)"
+                            },
+                            {
+                                "name": "MICROSOFT_PROVIDER_AUTHENTICATION_SECRET",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-ApiGateway-AUTHENTICATION-SECRET/)"
+                            },
+                            {
+                                "name": "TransactionService:CertificateThumbprint",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-ApiGateway-3E-ChildCert-Thumbprint/)"
+                            },
+                            {
+                                "name": "TransactionService:CertificateRootThumbprint",
+                                "defaultValue": "@Microsoft.KeyVault(SecretUri=https://kv-mdm-test-ukwest-003.vault.azure.net/secrets/MDM-ApiGateway-3E-RootCert-Thumbprint/)"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "serviceBusParameters": {
+			"type": "Object",
+            "defaultValue": {
+                "serviceBusName": "sb-mdm-test-ukwest-003",
+                "serviceSKUName": "Premium",
+                "serviceSKUTier": "Premium",
+                "serviceBusTopics": [
+                    {
+                        "name": "sbt-aadgroup"
+                    },
+                    {
+                        "name": "sbt-client"
+                    },
+                    {
+                        "name": "sbt-client-batch"
+                    },
+                    {
+                        "name": "sbt-matter"
+                    },
+                    {
+                        "name": "sbt-matter-batch"
+                    },
+                    {
+                        "name": "sbt-person"
+                    }
+                ],
+                "serviceBusTopicSubscriptions": [
+                    {
+                        "topic": "sbt-aadgroup",
+                        "subscription": "sub-sbt-aadgroup-mdm",
+                        "requiresSession": true
+                    },
+                    {
+                        "topic": "sbt-aadgroup",
+                        "subscription": "sub-sbt-aadgroup-d365",
+                        "requiresSession": true
+                    },
+                    {
+                        "topic": "sbt-aadgroup",
+                        "subscription": "sub-sbt-aadgroup-elite",
+                        "requiresSession": true
+                    },
+                    {
+                        "topic": "sbt-client",
+                        "subscription": "sub-sbt-client-mdm",
+                        "requiresSession": true
+                    },
+                    {
+                        "topic": "sbt-client",
+                        "subscription": "sub-sbt-client-d365",
+                        "requiresSession": true
+                    },
+                    {
+                        "topic": "sbt-client-batch",
+                        "subscription": "sub-sbt-client-mdm-batch",
+                        "requiresSession": false
+                    },
+                    {
+                        "topic": "sbt-matter",
+                        "subscription": "sub-sbt-matter-mdm",
+                        "requiresSession": true
+                    },
+                    {
+                        "topic": "sbt-matter",
+                        "subscription": "sub-sbt-matter-d365",
+                        "requiresSession": true
+                    },
+                    {
+                        "topic": "sbt-matter-batch",
+                        "subscription": "sub-sbt-matter-mdm-batch",
+                        "requiresSession": false
+                    },
+                    {
+                        "topic": "sbt-person",
+                        "subscription": "sub-sbt-person-d365",
+                        "requiresSession": true
+                    },
+                    {
+                        "topic": "sbt-person",
+                        "subscription": "sub-sbt-person-elite",
+                        "requiresSession": true
+                    },
+                    {
+                        "topic": "sbt-person",
+                        "subscription": "sub-sbt-person-intapp",
+                        "requiresSession": true
+                    }
+                ]
+            }
+        },
+        "keyVaultParameters": {
+			"type": "Object",
+            "defaultValue": {
+                "keyVaultName": "kv-mdm-test-ukwest-003",
+                "keyVaultTenantId": "2bde20df-3681-4b0e-b7e5-7d6c9260dff7"
+            }
+        },
+        "platformParameters": {
+			"type": "Object",
+            "defaultValue": {
+                "platformSubscriptionID": "10d56790-18f8-47e0-a895-1ef798ddb4be",
+                "platformResourceGroupName": "rg-platform-test-ukwest-001",
+                "platformKeyVaultName": "kv-plat-test-ukwest-001"
+            }
+        },
+        "linkedTemplateLocation": {
+            "type": "String",
+			"defaultValue": "https://starmprduksouth001.blob.core.windows.net/armtemplates-1-0-0-337"
+        },
+        "linkedTemplateSAS": {
+			"type": "String",
+            "defaultValue": "sp=r&st=2022-07-13T09:37:45Z&se=2022-07-13T17:37:45Z&spr=https&sv=2021-06-08&sr=c&sig=r1ex1VOnYtF4LNZ7GJvpcRFQuJg1RzAi6awWcTMlNWQ%3D"
+        }
+    },
+    "variables": {
+        "ltFunctionAppwithpe": "[concat(parameters('linkedTemplateLocation'), '/s/Templates/Patterns/Azure Function App Premium with Private Endpoint VNET Integration and AAD/azuredeploy.json?', parameters('linkedTemplateSAS'))]",
+        "ltKeyVaultwithpe": "[concat(parameters('linkedTemplateLocation'), '/s/Templates/Patterns/Azure Key Vault with Private Endpoint/azuredeploy.json?', parameters('linkedTemplateSAS'))]",
+        "ltLogicAppwithpe": "[concat(parameters('linkedTemplateLocation'), '/s/Templates/Patterns/Azure Logic App Standard with Private Endpoint and VNET Integration/azuredeploy.json?', parameters('linkedTemplateSAS'))]",
+        
+        "ltServiceBuswithpe": "[concat(parameters('linkedTemplateLocation'), '/s/Templates/Patterns/Azure Service Bus with Private Endpoint/azuredeploy.json?', parameters('linkedTemplateSAS'))]",
+        "ltLogAnalytics": "[concat(parameters('linkedTemplateLocation'), '/s/Templates/Building Blocks/Azure Log Analytics/azuredeploy.json?', parameters('linkedTemplateSAS'))]",
+        "ltAppInsights": "[concat(parameters('linkedTemplateLocation'), '/s/Templates/Building Blocks/Azure Application Inisghts/azuredeploy.json?', parameters('linkedTemplateSAS'))]",
+        "ltDataFactorywithpe": "[concat(parameters('linkedTemplateLocation'), '/s/Templates/Patterns/Azure Data Factory with Private Endpoint/azuredeploy.json?', parameters('linkedTemplateSAS'))]"
+
+    },
+    "functions": [],
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "MDM-Deploy-KeyVaultwithPE",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('ltKeyVaultwithpe')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultName": {
+                        "value": "[parameters('keyVaultParameters').keyVaultName]"
+                    },
+                    "keyVaultTenantId": {
+                        "value": "[parameters('keyVaultParameters').keyVaultTenantId]"
+                    },
+                    "privateEndpointSubnet": {
+                        "value": "[parameters('privateEndpointSubnet')]"
+                    },
+                    "privateEndpointVNET": {
+                        "value": "[parameters('privateEndpointVNET')]"
+                    },
+                    "privateEndpointVNETResourcegroup": {
+                        "value": "[parameters('privateEndpointVNETResourcegroup')]"
+                    },
+                    "privateDnsResourceGroup": {
+                        "value": "[parameters('privateDnsResourceGroup')]"
+                    },
+                    "privateDnsSubscriptionID": {
+                        "value": "[parameters('platformParameters').platformSubscriptionID]"
+                    },
+                    "linkedTemplateLocation": {
+                        "value": "[parameters('linkedTemplateLocation')]"
+                    },
+                    "linkedTemplateSAS": {
+                        "value": "[parameters('linkedTemplateSAS')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "MDM-Deploy-LogicAppWithPE-VNET",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments','MDM-Deploy-ApplicationInsights')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('ltLogicAppwithpe')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "logicAppPlanName": {
+                        "value": "[parameters('logicAppParameters').logicAppPlanName]"
+                    },
+                    "logicAppPlanSKUName": {
+                        "value": "[parameters('logicAppParameters').logicAppPlanSKUName]"
+                    },
+                    "logicApps": {
+                        "value": "[parameters('logicAppParameters').logicApps]"
+                    },
+                    "logicAppPrivateStorageName": {
+                        "value": "[parameters('logicAppParameters').logicAppPrivateStorageName]"
+                    },
+                    "privateEndpointSubnet": {
+                        "value": "[parameters('privateEndpointSubnet')]"
+                    },
+                    "privateEndpointVNET": {
+                        "value": "[parameters('privateEndpointVNET')]"
+                    },
+                    "privateEndpointVNETResourcegroup": {
+                        "value": "[parameters('privateEndpointVNETResourcegroup')]"
+                    },
+                    "vnetIntegrationSubnet": {
+                        "value": "[parameters('logicAppParameters').logicAppVNETIntegrationSubnet]"
+                    },
+                    "privateDnsResourceGroup": {
+                        "value": "[parameters('privateDnsResourceGroup')]"
+                    },
+                    "privateDnsSubscriptionID": {
+                        "value": "[parameters('platformParameters').platformSubscriptionID]"
+                    },
+                    "appInsightsName": {
+                        "value": "[parameters('applicationInsightsParameters').appInsightsName]"
+                    },
+                    "linkedTemplateLocation": {
+                        "value": "[parameters('linkedTemplateLocation')]"
+                    },
+                    "linkedTemplateSAS": {
+                        "value": "[parameters('linkedTemplateSAS')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "MDM-Deploy-FunctionAppWithPE-VNET",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments','MDM-Deploy-ApplicationInsights')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('ltFunctionAppwithpe')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "functionAppPlanName": {
+                        "value": "[parameters('functionAppParameters').functionAppPlanName]"
+                    },
+                    "functionAppPlanSKUName": {
+                        "value": "[parameters('functionAppParameters').functionAppPlanSKUName]"
+                    },
+                    "functionApps": {
+                        "value": "[parameters('functionAppParameters').functionApps]"
+                    },
+                    "functionAppPrivateStorageName": {
+                        "value": "[parameters('functionAppParameters').functionAppPrivateStorageName]"
+                    },
+                    "privateEndpointSubnet": {
+                        "value": "[parameters('privateEndpointSubnet')]"
+                    },
+                    "privateEndpointVNET": {
+                        "value": "[parameters('privateEndpointVNET')]"
+                    },
+                    "privateEndpointVNETResourcegroup": {
+                        "value": "[parameters('privateEndpointVNETResourcegroup')]"
+                    },
+                    "vnetIntegrationSubnet": {
+                        "value": "[parameters('functionAppParameters').functionAppVNETIntegrationSubnet]"
+                    },
+                    "privateDnsResourceGroup": {
+                        "value": "[parameters('privateDnsResourceGroup')]"
+                    },
+                    "privateDnsSubscriptionID": {
+                        "value": "[parameters('platformParameters').platformSubscriptionID]"
+                    },
+                    "appInsightsName": {
+                        "value": "[parameters('applicationInsightsParameters').appInsightsName]"
+                    },
+                    "linkedTemplateLocation": {
+                        "value": "[parameters('linkedTemplateLocation')]"
+                    },
+                    "linkedTemplateSAS": {
+                        "value": "[parameters('linkedTemplateSAS')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "MDM-Deploy-ServiceBusWithPE",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('ltServiceBuswithpe')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "serviceBusName": {
+                        "value": "[parameters('serviceBusParameters').serviceBusName]"
+                    },
+                    "serviceSKUName": {
+                        "value": "[parameters('serviceBusParameters').serviceSKUName]"
+                    },
+                    "serviceSKUTier": {
+                        "value": "[parameters('serviceBusParameters').serviceSKUTier]"
+                    },
+                    "serviceBusTopics": {
+                        "value": "[parameters('serviceBusParameters').serviceBusTopics]"
+                    },
+                    "serviceBusTopicSubscriptions": {
+                        "value": "[parameters('serviceBusParameters').serviceBusTopicSubscriptions]"
+                    },
+                    "keyVaultName": {
+                        "value": "[parameters('keyVaultParameters').keyVaultName]"
+                    },
+                    "privateEndpointSubnet": {
+                        "value": "[parameters('privateEndpointSubnet')]"
+                    },
+                    "privateEndpointVNET": {
+                        "value": "[parameters('privateEndpointVNET')]"
+                    },
+                    "privateEndpointVNETResourcegroup": {
+                        "value": "[parameters('privateEndpointVNETResourcegroup')]"
+                    },
+                    "privateDnsResourceGroup": {
+                        "value": "[parameters('privateDnsResourceGroup')]"
+                    },
+                    "privateDnsSubscriptionID": {
+                        "value": "[parameters('platformParameters').platformSubscriptionID]"
+                    },
+                    "linkedTemplateLocation": {
+                        "value": "[parameters('linkedTemplateLocation')]"
+                    },
+                    "linkedTemplateSAS": {
+                        "value": "[parameters('linkedTemplateSAS')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "MDM-Deploy-LogAnalytics",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('ltLogAnalytics')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "logAnalyticsName": {
+                        "value": "[parameters('logAnalyticsParameters').logAnalyticsName]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "MDM-Deploy-ApplicationInsights",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments','MDM-Deploy-LogAnalytics')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('ltAppInsights')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "appInsightsName": {
+                        "value": "[parameters('applicationInsightsParameters').appInsightsName]"
+                    },
+                    "logAnalyticsName": {
+                        "value": "[parameters('logAnalyticsParameters').logAnalyticsName]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "MDM-Deploy-DataFactoryWithPE",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('ltDataFactorywithpe')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "dataFactoryName": {
+                        "value": "[parameters('dataFactoryParameters').dataFactoryName]"
+                    },
+                    "privateEndpointSubnet": {
+                        "value": "[parameters('privateEndpointSubnet')]"
+                    },
+                    "privateEndpointVNET": {
+                        "value": "[parameters('privateEndpointVNET')]"
+                    },
+                    "privateEndpointVNETResourcegroup": {
+                        "value": "[parameters('privateEndpointVNETResourcegroup')]"
+                    },
+                    "privateDnsResourceGroup": {
+                        "value": "[parameters('privateDnsResourceGroup')]"
+                    },
+                    "privateDnsSubscriptionID": {
+                        "value": "[parameters('platformParameters').platformSubscriptionID]"
+                    },
+                    "linkedTemplateLocation": {
+                        "value": "[parameters('linkedTemplateLocation')]"
+                    },
+                    "linkedTemplateSAS": {
+                        "value": "[parameters('linkedTemplateSAS')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}

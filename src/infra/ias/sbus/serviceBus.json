@@ -25,8 +25,7 @@
 			"name": "[parameters('serviceBus').name]",
 			"location": "[resourceGroup().location]",
 			"sku": {
-				"name": "[parameters('serviceBus').tierName]",
-				"tier": "[parameters('serviceBus').tier]"
+				"name": "[parameters('serviceBus').sku]"				
 			},
 			"properties": {
 				"disableLocalAuth": false,

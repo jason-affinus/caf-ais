@@ -237,12 +237,15 @@
                     },
                     "logicApp": {
                         "value": "[variables('logicApp')]"
+                    },
+                    "appInsights": {
+                        "value": "[variables('appInsights')]"
                     }
                 }
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-vnet')]"
-                //"[resourceId('Microsoft.Resources/deployments', 'caf-ais-storage')]"
+                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-vnet')]",
+                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-app-inisghts')]"
             ]
         },
         // apim
@@ -324,7 +327,11 @@
                     }
 
                 }
-            }
+                
+            },
+            "dependsOn":[
+                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-log-analytics')]"
+            ]
 
         }
 

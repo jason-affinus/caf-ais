@@ -28,6 +28,7 @@
                 "ApplicationId": "[parameters('appInsights').name]",                
                 "WorkspaceResourceId": "[resourceId('microsoft.operationalinsights/workspaces', parameters('logAnalytics').name)]"
             }
+           
         }
     ],
     "outputs": {}

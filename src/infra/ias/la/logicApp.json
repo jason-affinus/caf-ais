@@ -13,6 +13,9 @@
         },
         "logicApp": {
             "type": "object"
+        },
+        "appInsights": {
+            "type": "object"
         }
 
 
@@ -372,6 +375,14 @@
                         {
                             "name": "APP_KIND",
                             "value": "workflowApp"
+                        },
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference(resourceId('Microsoft.Insights/components', parameters('appInsights').name), '2015-05-01', 'Full').properties.InstrumentationKey]"
+                        },
+                        {
+                            "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                            "value": "[reference(resourceId('Microsoft.Insights/components', parameters('appInsights').name), '2020-02-01', 'Full').ConnectionString]"
                         }
                     ],
                     "cors": {},

@@ -49,7 +49,7 @@
             "type": "string",
             "defaultValue": "192.168.20.0/24",
             "metadata": {
-                "description": "CIDR address prefix for the private link."
+                "description": "CIDR address prefix for the IaaS VM's."
             }
         },
         "apimAdminEmail": {

@@ -2,15 +2,8 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "keyVaultSku": {
-            "type": "object",
-            "defaultValue": {
-                "name": "standard",
-                "family": "A"
-            },
-            "metadata": {
-                "description": "Specifies the SKU to use for the key vault."
-            }
+        "keyVault": {
+            "type": "object"
         },
         "vNet": {
             "type": "object"
@@ -21,7 +14,6 @@
 
     },
     "variables": {
-        "keyVaultName": "[concat('kv-',parameters('platform').systemPrefix,'-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
         "pepName": "[concat('pep-',parameters('platform').systemPrefix,'-kv-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
         "pepNicName": "[concat('nic-',parameters('platform').systemPrefix,'-kv-',parameters('platform').environment,'-',parameters('platform').region,'-01')]"
 
@@ -30,12 +22,15 @@
         {
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2021-10-01",
-            "name": "[variables('keyVaultName')]",
+            "name": "[parameters('keyVault').name]",
             "location": "[parameters('platform').region]",
             "properties": {
                 "enableRbacAuthorization": true,
                 "tenantId": "[tenant().tenantId]",
-                "sku": "[parameters('keyVaultSku')]",
+                "sku": {
+                    "family": "A",
+                    "name": "[parameters('keyVault').name]"
+                },
                 "networkAcls": {
                     "bypass": "AzureServices",
                     "defaultAction": "Deny",
@@ -70,7 +65,7 @@
                     {
                         "name": "[variables('pepName')]",
                         "properties": {
-                            "privateLinkServiceId": "[resourceId('Microsoft.KeyVault/vaults',variables('keyVaultName'))]",
+                            "privateLinkServiceId": "[resourceId('Microsoft.KeyVault/vaults',parameters('keyVault').name)]",
                             "groupIds": [ "vault" ]
                         }
                     }
@@ -78,7 +73,7 @@
             },
             "tags": {},
             "dependsOn": [
-                "[resourceId('Microsoft.KeyVault/vaults',variables('keyVaultName'))]"
+                "[resourceId('Microsoft.KeyVault/vaults',parameters('keyVault').name)]"
 
             ]
         }

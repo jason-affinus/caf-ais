@@ -76,6 +76,12 @@
         "logicApp": {
             "name": "[concat('logic',variables('nameSuffix'))]"
         },
+
+        "keyVault": {
+            "name": "[concat('kv',variables('nameSuffix'))]",
+            "sku": "Standard"
+        },
+
         "apim": {
             "name": "[concat('apim',variables('nameSuffix'))]",
             "tier": "Developer",
@@ -86,7 +92,12 @@
 
         },
 
-        "serviceBusName": "[concat('sbus',variables('nameSuffix'))]",
+        "serviceBus": {
+            "name":"[concat('sbus',variables('nameSuffix'))]",
+            "tier": "Standard",
+            "tierName": "Standard"
+        },
+
 
         "vNet": {
             "name": "[concat('vnet',variables('nameSuffix'))]",
@@ -132,11 +143,8 @@
                     "vNet": {
                         "value": "[variables('vNet')]"
                     },
-                    "keyVaultSku": {
-                        "value": {
-                            "name": "standard",
-                            "family": "A"
-                        }
+                    "keyVault": {
+                        "value": "[variables('keyVault')]"
                     }
                 }
             },
@@ -177,10 +185,15 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "servicebusName": {
-                        "value": "[variables('serviceBusName')]"
+                   "platform": {
+                        "value": "[variables('platform')]"
+                    },
+                    "vNet": {
+                        "value": "[variables('vNet')]"
+                    },
+                    "serviceBus": {
+                        "value": "[variables('serviceBus')]"
                     }
-
                 }
             },
             "dependsOn": [
@@ -217,7 +230,7 @@
                 "[resourceId('Microsoft.Resources/deployments', 'caf-ais-vnet')]"
                 //"[resourceId('Microsoft.Resources/deployments', 'caf-ais-storage')]"
             ]
-        }
+        },
          // apim
         {
             "type": "Microsoft.Resources/deployments",

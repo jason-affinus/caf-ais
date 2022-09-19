@@ -101,8 +101,8 @@
 
         "serviceBus": {
             "name":"[concat('sbus',variables('nameSuffix'))]",
-            "tier": "Standard",
-            "tierName": "Standard"
+            "skuname": "Premium",
+            "skutier": "Premium"
         },
 
 

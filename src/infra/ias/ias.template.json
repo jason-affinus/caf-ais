@@ -122,7 +122,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'kv/template.json')]",
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'kv/keyVault.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -153,7 +153,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'vnet/template.json')]",
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'vnet/vNet.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -173,7 +173,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'sbus/template.json')]",
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'sbus/serviceBus.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -218,68 +218,6 @@
                 //"[resourceId('Microsoft.Resources/deployments', 'caf-ais-storage')]"
             ]
         }
-       /*
-        // storage
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2021-04-01",
-            "name": "caf-ais-storage",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'stg/template.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "platform": {
-                        "value": "[variables('platform')]"
-                    },
-                    "vNet": {
-                        "value": "[variables('vNet')]"
-                    },
-                    "storage": {
-                        "value": "[variables('storage')]"
-                    }
-
-                }
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-vnet')]"
-            ]
-        },
-        // PEP
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2021-04-01",
-            "name": "caf-ais-pep",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[uri(deployment().properties.templateLink.uri, 'pep/template.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "platform": {
-                        "value": "[variables('platform')]"
-                    },
-                    "vNet": {
-                        "value": "[variables('vNet')]"
-                    },
-                    "storage": {
-                        "value": "[variables('storage')]"
-                    },
-                     "logicApp": {
-                        "value": "[variables('logicApp')]"
-                    }
-
-                }
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-logicapp')]",
-                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-vnet')]",
-                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-storage')]"
-            ]
-        },
          // apim
         {
             "type": "Microsoft.Resources/deployments",

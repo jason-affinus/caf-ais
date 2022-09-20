@@ -275,7 +275,7 @@
                         "value": "[variables('storage')]"
                     },
                     "funcApp": {
-                        "value": "[variables('logicApp')]"
+                        "value": "[variables('funcApp')]"
                     },
                     "appInsights": {
                         "value": "[variables('appInsights')]"

@@ -284,7 +284,7 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'caf-ais-vnet')]",
-                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-app-insights')]"
+                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-app-insights')]",
                 "[resourceId('Microsoft.Resources/deployments', 'caf-ais-logicapp')]"
             ]
         },

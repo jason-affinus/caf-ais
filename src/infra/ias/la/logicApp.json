@@ -43,7 +43,7 @@
             },
 
             "properties": {
-                "publicNetworkAccess": "Disabled",
+                "publicNetworkAccess": "Enabled", // Need to disable after deployment of all artefacts.
                 "supportsHttpsTrafficOnly": true,
                 "minimumTlsVersion": "TLS1_2",
 
@@ -52,7 +52,7 @@
                     "bypass": "None",
                     "virtualNetworkRules": [],
                     "ipRules": [],
-                    "defaultAction": "Allow"
+                    "defaultAction": "Deny"
                 }
             }
         },

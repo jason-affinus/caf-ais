@@ -95,9 +95,6 @@
             "properties": {
                 "protocolSettings": {
                 },
-                "cors": {
-                    "corsRules": []
-                },
                 "shareDeleteRetentionPolicy": {
                     "enabled": true,
                     "days": 7

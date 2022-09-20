@@ -83,7 +83,9 @@
         "logicApp": {
             "name": "[concat('logic',variables('nameSuffix'))]"
         },
-
+        "funcApp": {
+            "name": "[concat('func',variables('nameSuffix'))]"
+        },
         "keyVault": {
             "name": "[concat('kv',variables('nameSuffix'))]",
             "sku": "Standard"
@@ -239,6 +241,40 @@
                         "value": "[variables('storage')]"
                     },
                     "logicApp": {
+                        "value": "[variables('logicApp')]"
+                    },
+                    "appInsights": {
+                        "value": "[variables('appInsights')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-vnet')]",
+                "[resourceId('Microsoft.Resources/deployments', 'caf-ais-app-insights')]"
+            ]
+        },
+        // Function  Apps
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "caf-ais-funcapp",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(deployment().properties.templateLink.uri, 'func/funcApp.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "platform": {
+                        "value": "[variables('platform')]"
+                    },
+                    "vNet": {
+                        "value": "[variables('vNet')]"
+                    },
+                    "storage": {
+                        "value": "[variables('storage')]"
+                    },
+                    "funcApp": {
                         "value": "[variables('logicApp')]"
                     },
                     "appInsights": {

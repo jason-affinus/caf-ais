@@ -62,8 +62,6 @@
             "kind": "functionapp",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storage').name)]",
-                "[resourceId('Microsoft.Insights/components', parameters('appInsights').name)]"
             ],
             "properties": {
                 "reserved": false,

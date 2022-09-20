@@ -138,6 +138,9 @@
 
     },
 
+    // TODO: Once all resources deployed, disable public access to
+    //    1) Storage account.
+
     "resources": [
         // Key vault 
         {

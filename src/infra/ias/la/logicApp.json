@@ -239,7 +239,6 @@
                 "[resourceId('Microsoft.Network/privateEndpoints',format(variables('stgPepName'),'table'))]"
             ]
 
-
         },
         {
             "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
@@ -446,7 +445,8 @@
             },
             "dependsOn": [
 
-                "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
+                "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
+                "[concat('Microsoft.Storage/storageAccounts/', parameters('storage').name)]"
 
             ],
             "properties": {

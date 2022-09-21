@@ -138,7 +138,7 @@
             "tags": {},
             "properties": {},
             "dependsOn": [
-                "[concat('pep-',parameters('platform').systemPrefix,'-logic-',parameters('platform').environment,'-',parameters('platform').region,'-01')]"
+                "[concat('pep-',parameters('platform').systemPrefix,'-func-',parameters('platform').environment,'-',parameters('platform').region,'-01')]"
             ]
 
         },

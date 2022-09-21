@@ -31,6 +31,9 @@
             "location": "[parameters('platform').region]",
             "identity": {
                 "type": "SystemAssigned"
+            },
+            "properties":{
+                "publicNetworkAccess": "Disabled"
             }
         }, 
         {

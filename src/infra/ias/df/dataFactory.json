@@ -47,7 +47,7 @@
                     {
                         "name": "[concat('pep-',parameters('platform').systemPrefix,'-df-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
                         "properties": {
-                            "privateLinkServiceId": "[resourceId('Microsoft.Web/sites',parameters('dataFactory').name)]",
+                            "privateLinkServiceId": "[resourceId('Microsoft.DataFactory/factories',parameters('dataFactory').name)]",
                             "groupIds": [ "dataFactory" ]
                         }
                     }
@@ -55,7 +55,7 @@
             },
             "tags": {},
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites',parameters('dataFactory').name)]"
+                "[resourceId('Microsoft.DataFactory/factories',parameters('dataFactory').name)]"
 
             ]
         },

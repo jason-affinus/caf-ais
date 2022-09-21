@@ -103,6 +103,45 @@
                     ]
                 }
             }
-        }
+        },
+        {
+            "location": "[parameters('platform').region]",
+            "name": "[concat('pep-',parameters('platform').systemPrefix,'-func-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
+            "type": "Microsoft.Network/privateEndpoints",
+            "apiVersion": "2021-05-01",
+            "properties": {
+                "subnet": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('vnet').name, parameters('vnet').privateLink.name)]"
+                },
+                "customNetworkInterfaceName": "[concat('nic-',parameters('platform').systemPrefix,'-func-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "[concat('pep-',parameters('platform').systemPrefix,'-func-',parameters('platform').environment,'-',parameters('platform').region,'-01')]",
+                        "properties": {
+                            "privateLinkServiceId": "[resourceId('Microsoft.Web/sites',parameters('funcApp').name)]",
+                            "groupIds": [ "sites" ]
+                        }
+                    }
+                ]
+            },
+            "tags": {},
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites',parameters('funcApp').name)]"
+
+            ]
+        },
+        {
+            "type": "Microsoft.Network/privateDnsZones",
+            "apiVersion": "2018-09-01",
+            "name": "[string('privatelink.azurewebsites.net')]",
+            "location": "global",
+            "tags": {},
+            "properties": {},
+            "dependsOn": [
+                "[concat('pep-',parameters('platform').systemPrefix,'-logic-',parameters('platform').environment,'-',parameters('platform').region,'-01')]"
+            ]
+
+        },
+
     ]
 }

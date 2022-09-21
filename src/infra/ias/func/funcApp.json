@@ -58,7 +58,7 @@
             "location": "[resourceGroup().location]",
             "kind": "functionapp",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+                "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
             ],
             "properties": {
                 "reserved": false,

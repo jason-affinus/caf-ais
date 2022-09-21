@@ -70,7 +70,7 @@
                 "[concat('pep-',parameters('platform').systemPrefix,'-df-',parameters('platform').environment,'-',parameters('platform').region,'-01')]"
             ]
 
-        },
+        }
     ],
     "outputs": {}
 }
